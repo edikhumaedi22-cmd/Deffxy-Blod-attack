@@ -1,0 +1,245 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>DeffXy — Demo (Aman)</title>
+  <style>
+    :root{
+      --bg: #000;
+      --accent: #2b2bff;
+      --panel: #111;
+      --muted: #bdaaa0;
+      --button-bg: #caaea4;
+      --glass: rgba(255,255,255,0.03);
+      --card-border: rgba(255,255,255,0.06);
+      font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    }
+    html,body{height:100%;margin:0;background:var(--bg);color:#fff;}
+    .wrap{
+      min-height:100%;
+      display:flex;
+      align-items:flex-start;
+      justify-content:center;
+      padding:36px 16px 80px;
+      box-sizing:border-box;
+    }
+    .card{
+      width:380px;
+      max-width:94vw;
+      background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border-radius:12px;
+      padding:20px;
+      box-shadow:0 8px 30px rgba(0,0,0,0.6);
+      border:1px solid var(--card-border);
+      text-align:center;
+    }
+    .title{
+      font-size:24px;
+      font-weight:800;
+      color:var(--accent);
+      margin:6px 0 12px;
+      text-shadow:0 1px 0 rgba(0,0,0,0.6);
+    }
+    .logo{
+      width:120px;
+      height:120px;
+      margin:0 auto 14px;
+      background:linear-gradient(180deg,#fff,#eee);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:8px;
+      overflow:hidden;
+    }
+    .logo img{width:100%;height:100%;object-fit:contain;filter:grayscale(0.02) contrast(0.9);}
+    .subtitle{
+      font-size:20px;
+      color:var(--accent);
+      font-weight:700;
+      margin-bottom:12px;
+    }
+    .field{
+      text-align:left;
+      margin:10px 0;
+    }
+    .label{font-size:13px;color:#bbb;margin-bottom:6px;display:block;}
+    .input, .select{
+      width:100%;
+      padding:12px 14px;
+      border-radius:10px;
+      border:1px solid var(--card-border);
+      background:var(--glass);
+      color:#fff;
+      box-sizing:border-box;
+      font-size:15px;
+      outline:none;
+    }
+    .buttons{
+      display:flex;
+      gap:10px;
+      margin:14px 0 18px;
+      flex-wrap:wrap;
+      justify-content:space-between;
+    }
+    .mini{
+      flex:1;
+      min-width:90px;
+      background:rgba(255,255,255,0.02);
+      border-radius:10px;
+      padding:10px;
+      cursor:pointer;
+      user-select:none;
+      border:1px solid var(--card-border);
+      text-align:center;
+      font-weight:700;
+      color:var(--accent);
+    }
+    .mini:active{transform:translateY(1px);}
+    .kirim{
+      margin-top:8px;
+      padding:12px 16px;
+      width:100%;
+      border-radius:12px;
+      border:0;
+      background:var(--button-bg);
+      color:#111;
+      font-weight:700;
+      cursor:pointer;
+      box-shadow:0 6px 18px rgba(0,0,0,0.5);
+    }
+    .foot{
+      margin-top:12px;
+      color:var(--muted);
+      font-size:13px;
+    }
+    /* modal */
+    .modal-backdrop{
+      position:fixed;inset:0;display:none;align-items:center;justify-content:center;
+      background:rgba(0,0,0,0.6);z-index:50;
+    }
+    .modal{
+      background:#0f0f10;border-radius:12px;padding:18px;width:92%;max-width:420px;border:1px solid rgba(255,255,255,0.06);
+      box-shadow:0 8px 40px rgba(0,0,0,0.6);
+    }
+    .modal h3{margin:0 0 8px;font-size:18px;color:var(--accent);}
+    .modal p{margin:0 0 14px;color:#ddd;}
+    .modal .ok{padding:10px 12px;border-radius:10px;border:0;background:var(--button-bg);font-weight:700;cursor:pointer;}
+    @media (max-width:420px){
+      .card{padding:16px;}
+      .title{font-size:20px}
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="card" role="main" aria-labelledby="headline">
+      <div id="headline" class="title">Attack DeffXy</div>
+
+      <div class="logo" aria-hidden="true">
+        <!-- Placeholder logo: replace with your image if you want -->
+        <img src="data:image/svg+xml;utf8,
+        %3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E
+          %3Ccircle cx='50' cy='50' r='48' fill='%23ffffff'/%3E
+          %3Ctext x='50' y='55' font-size='14' text-anchor='middle' fill='%23FF3B3B' font-family='Arial'%3EDEFF%3C/text%3E
+        %3C/svg%3E" alt="Logo demo">
+      </div>
+
+      <div class="subtitle">DeffXy Official website</div>
+
+      <div class="field">
+        <label class="label" for="phone">Target Phone Number (contoh: 62xxxx)</label>
+        <input id="phone" class="input" inputmode="numeric" placeholder="62xxxxxxxxx" aria-describedby="phoneHelp">
+      </div>
+
+      <div class="field">
+        <label class="label" for="bug">Select Bug (demo)</label>
+        <select id="bug" class="select" aria-label="Select demo bug">
+          <option>Crash Infinity (Forclose) — demo</option>
+          <option>Delay System — demo</option>
+          <option>Blank Screen — demo</option>
+        </select>
+      </div>
+
+      <div class="buttons" role="group" aria-label="Quick actions">
+        <div class="mini" data-value="delay">Delay System</div>
+        <div class="mini" data-value="blank">D Blank</div>
+        <div class="mini" data-value="crash">Crash DeffXy</div>
+      </div>
+
+      <button id="sendBtn" class="kirim" type="button">▶ Kirim Bug (Demo)</button>
+
+      <div class="foot">Versi demo — tidak melakukan tindakan nyata.</div>
+    </div>
+  </div>
+
+  <!-- Modal (demo notice) -->
+  <div id="modal" class="modal-backdrop" role="dialog" aria-modal="true" aria-hidden="true">
+    <div class="modal" role="document">
+      <h3>Demo Aman</h3>
+      <p>Ini hanya demo antarmuka. Tombol-tombol di halaman ini tidak melakukan aktivitas merugikan atau mengirim apapun ke perangkat lain.</p>
+      <div style="text-align:right;">
+        <button class="ok" id="okBtn">Oke, mengerti</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Simple interactivity for the demo page
+    (function(){
+      const mini = document.querySelectorAll('.mini');
+      const bugSelect = document.getElementById('bug');
+      mini.forEach(el=>{
+        el.addEventListener('click', ()=>{
+          const map = {
+            delay: 1,
+            blank: 2,
+            crash: 0
+          };
+          const idx = map[el.dataset.value] ?? 0;
+          bugSelect.selectedIndex = idx;
+          // visual feedback
+          el.animate([{transform:'translateY(0)'},{transform:'translateY(-4px)'}],{duration:120,fill:'forwards',direction:'alternate'});
+        });
+      });
+
+      const sendBtn = document.getElementById('sendBtn');
+      const phone = document.getElementById('phone');
+      const modal = document.getElementById('modal');
+      const okBtn = document.getElementById('okBtn');
+
+      function showModal(){
+        modal.style.display = 'flex';
+        modal.setAttribute('aria-hidden','false');
+      }
+      function hideModal(){
+        modal.style.display = 'none';
+        modal.setAttribute('aria-hidden','true');
+      }
+
+      sendBtn.addEventListener('click', ()=>{
+        // validation only for demo (not sending anything)
+        const val = phone.value.trim();
+        if(val === ''){
+          alert('Masukkan nomor target (hanya untuk demo).');
+          phone.focus();
+          return;
+        }
+        // show a modal/demo confirmation
+        showModal();
+      });
+
+      okBtn.addEventListener('click', hideModal);
+      // close modal on backdrop click
+      modal.addEventListener('click', (e)=>{
+        if(e.target === modal) hideModal();
+      });
+
+      // accessibility: close modal with Esc
+      window.addEventListener('keydown', (e)=>{
+        if(e.key === 'Escape') hideModal();
+      });
+    })();
+  </script>
+</body>
+</html>
