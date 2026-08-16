@@ -660,24 +660,24 @@ function P(t,m,g){return {t:t,m:m,g:g}}
 function B(t,m){return {t:t,m:m,brk:true}}
 var JADWAL = {
  'Senin':[
-   P('07.00–07.45','Upacara Bendera','Pembina Upacara'),
+   B('07.00–07.45','Upacara Bendera','Pembina Upacara'),
    P('07.45–08.25','Akidah akhlak',' '),
    P('08.25–09.05','Pkn',''),
    P('09.05–09.45','Mtk',''),
-   B('09.45–10.05','B inggris')], 
+   p('09.45–10.05','B inggris')], 
    
  'Selasa':[
    P('07.00–07.45','Quran H',' '),
    P('07.45–08.25','b Arab',' '),
    P('08.25–09.05','B inggris',' '),
    P('09.05–09.45','Sbk',' '),
-   B('09.45–10.05','Pai')],
+   p('09.45–10.05','Pai')],
  'Rabu':[
    P('07.00–07.45','Ips',''),
    P('07.45–08.25','Tik',' '),
    P('08.25–09.05','Bk',' '),
    P('09.05–09.45','B inggris',' '),
-   B('09.45–10.05','B indo')],
+   p('09.45–10.05','B indo')],
  'Kamis':[
    P('07.00–07.45','Mtk'),
    P('07.45–08.25','Fikih',''),
@@ -685,11 +685,11 @@ var JADWAL = {
  'Jumat':[
    P('07.00–07.30','Ipa'),
    P('07.30–08.10','pjok',' '),
-   P('08.10–08.50','Bahasa indo','Bu ')], 
+   P('08.10–08.50','Bahasa indo',' ')], 
    'Sabtu':[
    P('07.00–07.30','Aswaja'),
    P('07.30–08.10','Ips',' '),
-   P('08.10–08.50','Ipa','Bu ')]
+   P('08.10–08.50','Ipa',' ')]
 };
 var HARI = ['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
 var tabsBox = document.getElementById('hariTabs');
