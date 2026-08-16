@@ -661,58 +661,37 @@ function B(t,m){return {t:t,m:m,brk:true}}
 var JADWAL = {
  'Senin':[
    P('07.00–07.45','Upacara Bendera','Pembina Upacara'),
-   P('07.45–08.25','Matematika','Bu '),
-   P('08.25–09.05','Matematika','Bu '),
-   P('09.05–09.45','Bahasa Indonesia','Pak '),
-   B('09.45–10.05','Istirahat & jajan dulu 🍜'),
-   P('10.05–10.45','Bahasa Indonesia','Pak '),
-   P('10.45–11.25','Bahasa Inggris','Ms. '),
-   P('11.25–12.05','Bahasa Inggris','Ms.'),
-   B('12.05–12.45','Ishoma — makan & salat zuhur 🕌'),
-   P('12.45–13.25','IPA','Pak ')],
+   P('07.45–08.25','Akidah akhlak',' '),
+   P('08.25–09.05','Pkn',''),
+   P('09.05–09.45','Mtk',''),
+   B('09.45–10.05','B inggris')], 
+   
  'Selasa':[
-   P('07.00–07.45','IPA','Pak '),
-   P('07.45–08.25','IPA','Pak '),
-   P('08.25–09.05','Pend. Agama',' '),
-   P('09.05–09.45','Pend. Agama',' '),
-   B('09.45–10.05','Istirahat & jajan dulu 🍜'),
-   P('10.05–10.45','PJOK','Pak '),
-   P('10.45–11.25','PJOK','Pak '),
-   P('11.25–12.05','PPKn','Bu '),
-   B('12.05–12.45','Ishoma — makan & salat zuhur 🕌'),
-   P('12.45–13.25','PPKn','Bu ')],
+   P('07.00–07.45','Quran H',' '),
+   P('07.45–08.25','b Arab',' '),
+   P('08.25–09.05','B inggris',' '),
+   P('09.05–09.45','Sbk',' '),
+   B('09.45–10.05','Pai')],
  'Rabu':[
-   P('07.00–07.45','Bahasa Inggris','Ms. '),
-   P('07.45–08.25','Matematika','Bu '),
-   P('08.25–09.05','IPS','Pak '),
-   P('09.05–09.45','IPS','Pak '),
-   B('09.45–10.05','Istirahat & jajan dulu 🍜'),
-   P('10.05–10.45','Seni Budaya','Bu '),
-   P('10.45–11.25','Seni Budaya','Bu '),
-   P('11.25–12.05','Bahasa Jawa','Bu '),
-   B('12.05–12.45','Ishoma — makan & salat zuhur 🕌'),
-   P('12.45–13.25','Informatika','Pak ')],
+   P('07.00–07.45','Ips',''),
+   P('07.45–08.25','Tik',' '),
+   P('08.25–09.05','Bk',' '),
+   P('09.05–09.45','B inggris',' '),
+   B('09.45–10.05','B indo')],
  'Kamis':[
-   P('07.00–07.45','Pend. Agama','Ustaz Ferry'),
-   P('07.45–08.25','Bahasa Indonesia','Pak'),
-   P('08.25–09.05','Bahasa Indonesia','Pak '),
-   P('09.05–09.45','IPA — Praktikum','Pak '),
-   B('09.45–10.05','Istirahat & jajan dulu 🍜'),
-   P('10.05–10.45','Matematika','Bu '),
-   P('10.45–11.25','Bahasa Inggris','Ms. '),
-   P('11.25–12.05','Prakarya','Bu '),
-   B('12.05–12.45','Ishoma — makan & salat zuhur 🕌'),
-   P('12.45–13.25','Jam Wali Kelas','Bu ')],
+   P('07.00–07.45','Mtk'),
+   P('07.45–08.25','Fikih',''),
+   P('08.25–09.05','Bahasa Indonesia',' ')],
  'Jumat':[
-   P('07.00–07.30','Tadarus & Salat Dhuha','Wali Kelas'),
-   P('07.30–08.10','PPKn','Bu '),
-   P('08.10–08.50','Bahasa Jawa','Bu '),
-   P('08.50–09.30','IPS','Pak '),
-   B('09.30–09.50','Istirahat singkat ☕'),
-   P('09.50–10.40','Jumat Bersih / Class Meeting','Semua Warga'),
-   B('10.40–11.10','Doa bersama, lalu pulang duluan 🎉')]
+   P('07.00–07.30','Ipa'),
+   P('07.30–08.10','pjok',' '),
+   P('08.10–08.50','Bahasa indo','Bu ')], 
+   'Sabtu':[
+   P('07.00–07.30','Aswaja'),
+   P('07.30–08.10','Ips',' '),
+   P('08.10–08.50','Ipa','Bu ')]
 };
-var HARI = ['Senin','Selasa','Rabu','Kamis','Jumat'];
+var HARI = ['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
 var tabsBox = document.getElementById('hariTabs');
 var tbody = document.getElementById('isiJadwal');
 var hariNote = document.getElementById('hariNote');
