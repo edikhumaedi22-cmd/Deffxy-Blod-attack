@@ -13,20 +13,44 @@ body {
   height:100vh; overflow:hidden;
 }
 
-/* ========== BACKGROUND ========== */
-.bg {
-  position:fixed; inset:0;
-  background:radial-gradient(circle at 30% 30%, #0a2a8f 0%, #05103c 55%, #020824 100%);
+/* ========== BACKGROUND FOTO ========== */
+#bg-image {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  /* GANTI 'foto_kamu.jpg' DENGAN NAMA FILE FOTO ANDA */
+  background-image: url('foto_kamu.jpg'); 
+  background-size: cover; /* Memastikan foto memenuhi layar */
+  background-position: center; /* Fokus ke tengah foto */
+  background-repeat: no-repeat;
+  z-index: 0;
 }
+
+/* Overlay gelap agar teks tetap terbaca di atas foto */
+.bg {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  background: rgba(2, 8, 36, 0.80); /* Warna dasar biru gelap transparan (bisa diatur 0.0 - 1.0) */
+  pointer-events: none;
+}
+
+/* Efek garis diagonal tetap dipertahankan untuk kesan futuristik */
 .bg::after {
-  content:""; position:absolute; right:0; top:0; width:45%; height:100%;
+  content:""; 
+  position:absolute; 
+  right:0; top:0; width:45%; height:100%;
   background:repeating-linear-gradient(45deg, rgba(0,198,255,.10) 0 2px, transparent 2px 16px);
   clip-path:polygon(35% 0,100% 0,100% 100%,0 100%);
 }
+
+/* Elemen heksagon background */
 .hexbg {
   position:absolute;
   clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);
-  background:rgba(0,120,255,.12);
+  background:rgba(0,120,255,.08); 
   animation:float 9s ease-in-out infinite;
 }
 @keyframes float {
@@ -84,7 +108,9 @@ h2 { font-size:clamp(28px,4.5vw,44px); letter-spacing:2px; }
 }
 
 .box { background:rgba(0,110,255,.35); border-left:4px solid #35e0ff;
-  padding:14px 18px; border-radius:8px; margin-top:16px; max-width:560px; }
+  padding:14px 18px; border-radius:8px; margin-top:16px; max-width:560px; 
+  backdrop-filter: blur(4px); /* Efek blur agar lebih mudah dibaca di atas foto */
+}
 .box .tag { display:inline-block; background:#35e0ff; color:#032060;
   font-weight:700; padding:4px 14px; border-radius:6px; margin-bottom:8px; }
 .box p { font-size:14px; color:#dceaff; line-height:1.5; }
@@ -126,6 +152,10 @@ h2 { font-size:clamp(28px,4.5vw,44px); letter-spacing:2px; }
 </head>
 <body>
 
+<!-- ✅ BACKGROUND FOTO -->
+<!-- Ganti 'foto_kamu.jpg' di CSS di atas dengan nama file foto Anda -->
+<div id="bg-image">https://files.catbox.moe/4hpr94.jpg</div>
+
 <div class="bg">
   <div class="hexbg" style="width:220px;height:250px;top:8%;left:6%;"></div>
   <div class="hexbg" style="width:140px;height:160px;top:65%;left:12%;animation-delay:2s;"></div>
@@ -154,7 +184,6 @@ h2 { font-size:clamp(28px,4.5vw,44px); letter-spacing:2px; }
     <div class="byline">SMP ISLAM BUSTANUL ULUM</div>
     <div class="pembimbing">
       <p><b>DEVELOPER:</b> Nama : ????</p>
-      
     </div>
   </div>
   <div class="visual robot">🦾</div>
