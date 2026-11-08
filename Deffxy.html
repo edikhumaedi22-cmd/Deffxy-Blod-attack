@@ -1,4 +1,4 @@
--<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="id">
 <head>
 <meta charset="UTF-8">
@@ -207,17 +207,17 @@ h2 .swipe{background:linear-gradient(100deg,var(--yellow),#ffcf1f);color:#3c2d05
   font-family:'Caveat',cursive;font-size:1.4rem;padding:.15rem .2rem;color:var(--ink);outline:none}
 .cari input:focus{border-color:var(--red);background:#fffbe6}
 .cari #jumlah{font-size:.75rem;font-weight:700;color:var(--ink-soft);background:var(--yellow);padding:.25rem .6rem}
-.warga-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:1rem}
-.kartu{background:var(--paper);padding:.95rem .6rem .8rem;display:flex;flex-direction:column;align-items:center;gap:.45rem;
+.warga-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:1.2rem}
+.kartu{background:var(--paper);padding:1.2rem .8rem 1rem;display:flex;flex-direction:column;align-items:center;gap:.6rem;
   box-shadow:0 7px 13px rgba(0,0,0,.2);transform:rotate(var(--r));transition:transform .25s, box-shadow .25s;position:relative}
 .kartu::before{content:"";position:absolute;top:-9px;left:50%;transform:translateX(-50%) rotate(-3deg);
   width:46px;height:14px;background:var(--tape);clip-path:var(--tapecut)}
 .kartu:hover{transform:rotate(0) translateY(-7px);box-shadow:0 14px 22px rgba(0,0,0,.28);z-index:2}
 .kartu.hide{display:none}
-.ava{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;color:#fff;
-  font-weight:800;font-size:1rem;letter-spacing:.02em;box-shadow:inset 0 -4px 0 rgba(0,0,0,.15)}
-.kartu .nm{font-weight:600;font-size:.84rem;text-align:center;line-height:1.25}
-.rtag{font-family:'Caveat',cursive;font-size:1rem;color:var(--red);line-height:1}
+.ava-img{width:64px;height:64px;border-radius:50%;object-fit:cover;
+  border:3px solid #fff;box-shadow:0 4px 8px rgba(0,0,0,.15);background:#eee}
+.kartu .nm{font-weight:700;font-size:.9rem;text-align:center;line-height:1.2;text-transform:capitalize}
+.rtag{font-family:'Caveat',cursive;font-size:1rem;color:var(--red);line-height:1;font-weight:700}
 .rtag.soft{color:#a49a85}
 
 /* ============ JADWAL ============ */
@@ -315,7 +315,7 @@ footer a:hover{transform:translateY(-2px)}
 <body>
 <div class="noise" aria-hidden="true"></div>
 
-<div class="topbar">✦ Mading Digital · SMP ISLAM BUSTANUL ULUM · Tahun Ajaran 2026/2027· <span id="hariIniTop">…</span> ✦</div>
+<div class="topbar">✦ Mading Digital · SMP ISLAM BUSTANUL ULUM · Tahun Ajaran 2026/2027 · <span id="hariIniTop">…</span> ✦</div>
 
 <nav class="nav" aria-label="Navigasi utama">
   <a class="logo" href="#beranda">9A</a>
@@ -337,7 +337,7 @@ footer a:hover{transform:translateY(-2px)}
     <div class="sticker" aria-hidden="true">EDISI<br>PERDANA!<br>★</div>
     <span class="kick-mast">Mading resmi · angkatan 2026–2027</span>
     <h1 class="title">KELAS <span class="hl">9A</span><span class="star">✦</span></h1>
-    <p class="mast-sub">Bukan sekadar kelas, ini <b>keluarga</b>. Wali kelas kita: <b>Ibu TALITHTA, S.Pd.</b> — dan tahun ini, kita bikin cerita yang layak dikenang.</p>
+    <p class="mast-sub">Bukan sekadar kelas, ini <b>keluarga</b>. Wali kelas kita: <b>Ibu Talithta, S.Pd.</b> — dan tahun ini, kita bikin cerita yang layak dikenang.</p>
     <div class="mast-bottom">
       <div class="mast-photos">
         <figure class="pol"><span class="ph"><img src="https://files.catbox.moe/a5sl85.jpg" alt="Foto kebersamaan kelas 9A" loading="lazy"></span></figure>
@@ -347,7 +347,7 @@ footer a:hover{transform:translateY(-2px)}
       <div class="scraps">
         <span class="scrap" style="--r:-3deg"><b>36</b> siswa</span>
         <span class="scrap" style="--r:2deg"><b>1</b> wali kelas</span>
-        <span class="scrap" style="--r:-1.5deg"><b></b> prestasi</span>
+        <span class="scrap" style="--r:-1.5deg"><b>∞</b> prestasi</span>
         <span class="scrap" style="--r:3deg"><b>∞</b> cerita seru</span>
       </div>
     </div>
@@ -358,17 +358,15 @@ footer a:hover{transform:translateY(-2px)}
   </div>
 </header>
   
-
-           
 <!-- ============ TICKER ============ -->
 <div class="ticker" aria-label="Pengumuman berjalan">
   <div class="tick-track">
     <div class="tick-set">
-      <span>📢 Kas mingguan Rp2.000 dikumpulkan tiap Senin ke Sapik</span><i>✦</i>
+      <span>📢 Kas mingguan Rp2.000 dikumpulkan tiap Senin ke Safik</span><i>✦</i>
       <span>🧹 Jadwal piket baru sudah ditempel di dekat pintu</span><i>✦</i>
     </div>
     <div class="tick-set" aria-hidden="true">
-      <span>📢 Kas mingguan Rp2.000 dikumpulkan tiap Senin ke Sapik</span><i>✦</i>
+      <span>📢 Kas mingguan Rp2.000 dikumpulkan tiap Senin ke Safik</span><i>✦</i>
       <span>🧹 Jadwal piket baru sudah ditempel di dekat pintu</span><i>✦</i>
     </div>
   </div>
@@ -376,14 +374,10 @@ footer a:hover{transform:translateY(-2px)}
 
 <main>
 <!-- ============ SEKILAS ============ -->
-  <figure class="pol"><span class="ph"><img src="https://files.catbox.moe/9n1r0e.jpg" alt="Foto kegiatan outbound kelas 9A" loading="lazy"></span></figure>
-        
-<!-- ============ SEKILAS ============ -->
-
 <section class="sec" id="sekilas">
   <div class="sec-head reveal" style="--r:0deg">
     <span class="kick">01 · SEKILAS</span>
-    <h2>Kelas Paling <span class="swipe">Rame</span> di Smp</h2>
+    <h2>Kelas Paling <span class="swipe">Rame</span> di SMP</h2>
   </div>
   <div class="about-grid">
     <article class="letter paper reveal" style="--r:.7deg">
@@ -394,28 +388,28 @@ footer a:hover{transform:translateY(-2px)}
     </article>
     <div class="side-col">
       <div class="motto reveal" style="--r:-1.5deg">“SATU KELAS, SATU CERITA.”
-        <small></small>
+        <small>SMP Islam Bustanul Ulum</small>
       </div>
       <div class="yel paper reveal" style="--r:1.8deg">
         <span class="tape blue" style="top:-12px;left:30px;transform:rotate(-6deg)" aria-hidden="true"></span>
         <small>Yel-yel kelas</small>
-        <p>“9A? Kompak selalu,!” 🔥</p>
+        <p>“9A? Kompak selalu!” 🔥</p>
       </div>
       <div class="facts reveal" style="--r:0deg">
-        <span class="scrap" style="--r:-2deg">Formasi utuh sejak <b></b></span>
+        <span class="scrap" style="--r:-2deg">?  <b>2026</b></span>
         <span class="scrap" style="--r:2.5deg"><b>18</b> putra · <b>18</b> putri</span>
-        <span class="scrap" style="--r:-1deg">Juara umum class meeting <b>0</b></span>
+        <span class="scrap" style="--r:-1deg"> <b>2026</b></span>
       </div>
     </div>
   </div>
   <div class="trophy reveal" style="--r:0deg">
     <h3>🗄️ Lemari Prestasi (geser →)</h3>
     <div class="trophy-row">
-      <div class="trop" style="--r:-1.5deg"><span class="medal">🏆</span><div><b></b><span>?</span></div></div>
-      <div class="trop" style="--r:1deg"><span class="medal">🥇</span><div><b></b><span> ?</span></div></div>
-      <div class="trop" style="--r:-1deg"><span class="medal">🎭</span><div><b></b><span> ?</span></div></div>
-      <div class="trop" style="--r:1.5deg"><span class="medal">🥈</span><div><b></b><span>? <span></div></div>
-      <div class="trop" style="--r:-1deg"><span class="medal">📚</span><div><b></b><span> ?</span></div></div>
+      <div class="trop" style="--r:-1.5deg"><span class="medal">🏆</span><div><b>Juara ?</b><span>?</span></div></div>
+      <div class="trop" style="--r:1deg"><span class="medal">🥇</span><div><b>Juara ?</b><span>?</span></div></div>
+      <div class="trop" style="--r:-1deg"><span class="medal">🎭</span><div><b>Terbaik ?</b><span>?</span></div></div>
+      <div class="trop" style="--r:1.5deg"><span class="medal">🥈</span><div><b>Juara ?</b><span>?</span></div></div>
+      <div class="trop" style="--r:-1deg"><span class="medal">📚</span><div><b>Juara ?</b><span>?</span></div></div>
     </div>
   </div>
 </section>
@@ -430,11 +424,11 @@ footer a:hover{transform:translateY(-2px)}
 
   <div class="wali paper reveal" style="--r:-1deg">
     <span class="tape" style="top:-12px;right:36px;transform:rotate(6deg)" aria-hidden="true"></span>
-    <figure class="pol" style="--rot:-3deg"><span class="ph"><img src="https://files.catbox.moe/wj61lx.jpg" alt="Foto Ibu Ratna Dewi, wali kelas 9A" loading="lazy"></span></figure>
+    <figure class="pol" style="--rot:-3deg"><span class="ph"><img src="https://files.catbox.moe/pbzjhe.jpg" alt="Foto Ibu Talithta" loading="lazy"></span></figure>
     <div class="info">
       <span class="role">Wali Kelas 9A</span>
       <h3>Ibu Talithta, S.Pd.</h3>
-      <p>Guru Matematika · </p>
+      <p>Guru Matematika</p>
       <em>“PR itu makanan, bukan beban.”</em>
     </div>
   </div>
@@ -442,52 +436,48 @@ footer a:hover{transform:translateY(-2px)}
   <div class="duo">
     <article class="badge-card paper reveal" style="--r:-1.5deg">
       <span class="tape blue" style="top:-12px;left:50%;transform:translateX(-50%) rotate(-4deg)" aria-hidden="true"></span>
-      <figure class="pol" style="--rot:-2deg"><span class="ph"><img src="https://files.catbox.moe/o6e2qm.jpg" alt="Foto Rafi Alfarizi, ketua kelas" loading="lazy"></span></figure>
+      <figure class="pol" style="--rot:-2deg"><span class="ph"><img src="https://files.catbox.moe/o6e2qm.jpg" alt="Foto Nazril" loading="lazy"></span></figure>
       <span class="role">Ketua Kelas</span>
       <h4>Nazril</h4>
-      <p>“Tegas,”</p>
+      <p>“Tegas dan adil.”</p>
     </article>
-     <div class="duo">
-    <article class="badge-card paper reveal" style="--r:-1.5deg">
-      <span class="tape blue" style="top:-12px;left:50%;transform:translateX(-50%) rotate(-4deg)" aria-hidden="true"></span>
-      <figure class="pol" style="--rot:-2deg"><span class="ph"><img src="https://files.catbox.moe/nxnm3e.jpg" alt="Foto Rafi Alfarizi, ketua kelas" loading="lazy"></span></figure>
-      <span class="role">Wakil</span>
+    <article class="badge-card paper reveal" style="--r:1.5deg">
+      <span class="tape blue" style="top:-12px;left:50%;transform:translateX(-50%) rotate(4deg)" aria-hidden="true"></span>
+      <figure class="pol" style="--rot:2deg"><span class="ph"><img src="https://files.catbox.moe/nxnm3e.jpg" alt="Foto Safira" loading="lazy"></span></figure>
+      <span class="role">Wakil Ketua Kelas</span>
       <h4>Safira</h4>
-      <p>“Otak kedua kelas,”</p>
+      <p>“Otak kedua kelas.”</p>
     </article>
   </div>
 
   <div class="pairs">
     <div class="pair-note n-yellow reveal" style="--r:-3deg">
       <span class="role">Sekretaris</span>
-      <b>Nayla</b>
-<b>syifa</b>
-      <span>catatan kelas selalu rapi ✍️</span>
+      <b>Nayla & Syifa</b>
+      <span>Catatan kelas selalu rapi ✍️</span>
     </div>
     <div class="pair-note n-pink reveal" style="--r:2.5deg">
       <span class="role">Bendahara</span>
-      <b>Safik</b>
-      <b>Nisa</b>
-      <span>ingat kas, ingat kas, ingat kas! 💸</span>
+      <b>Safik & Nisa</b>
+      <span>Ingat kas, ingat kas, ingat kas! 💸</span>
     </div>
     <div class="pair-note n-blue reveal" style="--r:-2deg">
       <span class="role">Keagamaan</span>
-      <b>Muji</b>
-      <b>Lailatul maghfiroh</b>
-      <span></span>
+      <b>Muji & Lailatul</b>
+      <span>Memakmurkan kelas dengan kebaikan.</span>
     </div>
     <div class="pair-note n-green reveal" style="--r:3deg">
       <span class="role">Kebersihan</span>
-      <b>Adam</b>
-      <b>Zahra</b>
-      <span>sampah lihat kamu. buang. 🌿</span>
+      <b>Adam & Zahra</b>
+      <span>Sampah lihat kamu. Buang! 🌿</span>
     </div>
   </div>
 
   <div class="seksi reveal" style="--r:0deg">
     <h3>Seksi-seksi andalan ↓</h3>
     <div class="tags">
-      <div class="tag" style="--r:1.5deg"><b>Mading &amp; Dokumentasi</b>Alif</div>
+      <div class="tag" style="--r:1.5deg"><b>Mading & Dokumentasi</b> Alif</div>
+      <div class="tag" style="--r:-1deg"><b>Keamanan</b> ? </div>
     </div>
   </div>
 </section>
@@ -500,7 +490,7 @@ footer a:hover{transform:translateY(-2px)}
   </div>
   <div class="cari paper reveal" style="--r:0deg">
     <label for="q">🔍 Cari warga 9A:</label>
-    <input id="q" type="search" placeholder="ketik nama… (misal: adam)" autocomplete="off">
+    <input id="q" type="search" placeholder="ketik nama… (misal: Adam)" autocomplete="off">
     <span id="jumlah">36 dari 36 siswa</span>
   </div>
   <div class="warga-grid" id="wargaGrid"></div>
@@ -532,14 +522,12 @@ footer a:hover{transform:translateY(-2px)}
     <p class="sub">Sentuh fotonya buat lihat lebih dekat 📷</p>
   </div>
   <div class="gal">
-    <figure class="pol reveal" style="--rot:-5deg;--r:-5deg"><span class="tape blue" aria-hidden="true"></span><span class="ph"><img src="https://files.catbox.moe/k7obp5.jpg" alt="Bocil" loading="lazy" style="animation-delay:0s"></span><figcaption>Kelas 9A</figcaption><caption></figure>
-    <figure class="pol reveal" style="--rot:3deg;--r:3deg"><span class="tape" aria-hidden="true"></span><span class="ph"><img src="https://files.catbox.moe/c7u77s.jpg" alt="Habibi" loading="lazy" style="animation-delay:-2s"></span><figcaption>Foto Cowok</figcaption></figure>
-    <figure class="pol reveal" style="--rot:-2deg;--r:-2deg"><span class="tape" aria-hidden="true"></span><span class="ph"><img src="https://files.catbox.moe/a5sl85.jpg" alt="Final futsal class meeting" loading="lazy" style="animation-delay:-4s"></span><figcaption>Foto Cewek</figcaption></figure>
-    <figure class="pol reveal" style="--rot:6deg;--r:6deg"><span class="tape blue" aria-hidden="true"></span><span class="ph"><img src="https://files.catbox.moe/ghd12h.jpg" alt="Makeover pojok baca kelas" loading="lazy" style="animation-delay:-6s"></span><figcaption>Cowok 9A</figcaption></figure>
-    <figure class="pol reveal" style="--rot:-4deg;--r:-4deg"><span class="tape" aria-hidden="true"></span><span class="ph"><img src="https://files.catbox.moe/r50yiq.jpg" alt="Pentas seni drama Kabayan" loading="lazy" style="animation-delay:-3s"></span><figcaption>Cewek 9A</figcaption></figure>
-    <figure class="pol reveal" style="--rot:2deg;--r:2deg"><span class="tape blue" aria-hidden="true"></span><span class="ph"><img src="https://files.catbox.moe/48f1b0.jpg" alt="Belajar bersama menjelang PTS" loading="lazy" style="animation-delay:-7s"></span><figcaption>Cewek 9A</figcaption></figure>
+    <figure class="pol reveal" style="--rot:-5deg;--r:-5deg"><span class="tape blue" aria-hidden="true"></span><span class="ph"><img src="https://files.catbox.moe/k7obp5.jpg" alt="Kegiatan Kelas" loading="lazy" style="animation-delay:0s"></span><figcaption>Outbound Seru</figcaption></figure>
+    <figure class="pol reveal" style="--rot:3deg;--r:3deg"><span class="tape" aria-hidden="true"></span><span class="ph"><img src="https://files.catbox.moe/c7u77s.jpg" alt="Pentas Seni" loading="lazy" style="animation-delay:-2s"></span><figcaption>Pentas Seni Drama</figcaption></figure>
+    <figure class="pol reveal" style="--rot:-2deg;--r:-2deg"><span class="tape" aria-hidden="true"></span><span class="ph"><img src="https://files.catbox.moe/a5sl85.jpg" alt="Class Meeting" loading="lazy" style="animation-delay:-4s"></span><figcaption>Final Futsal Class Meeting</figcaption></figure>
+    <figure class="pol reveal" style="--rot:6deg;--r:6deg"><span class="tape blue" aria-hidden="true"></span><span class="ph"><img src="https://files.catbox.moe/ghd12h.jpg" alt="Belajar Bersama" loading="lazy" style="animation-delay:-6s"></span><figcaption>Belajar Bersama</figcaption></figure>
   </div>
-  <p class="gal-note">✎ mau fotomu nempel di sini? kirim ke tim mading ya!</p>
+  <p class="gal-note">✎ Mau fotomu nempel di sini? Kirim ke tim mading ya!</p>
 </section>
 
 <!-- ============ PAPAN ============ -->
@@ -551,7 +539,7 @@ footer a:hover{transform:translateY(-2px)}
   <div class="papan-wrap">
     <div class="board reveal" id="papanNotes" style="--r:0deg">
       <div class="note n-yellow" style="--r:-3deg"><span class="pin"></span><p>Bayar kas Rp2.000 ya, jangan pura-pura lupa 😤</p><small>— Bendahara · pekan ini</small></div>
-      <div class="note n-blue" style="--r:2deg"><span class="pin yellow"></span><p>Kelompok 3 piket hari ini. Sapu sampai pojok belakang!</p><small>— Seksi Keamanan</small></div>
+      <div class="note n-blue" style="--r:2deg"><span class="pin yellow"></span><p>Kelompok 3 piket hari ini. Sapu sampai pojok belakang!</p><small>— Seksi Kebersihan</small></div>
     </div>
     <div class="side-papan">
       <div class="count-card paper reveal" style="--r:1.2deg">
@@ -564,7 +552,7 @@ footer a:hover{transform:translateY(-2px)}
           <div class="cbox"><b id="c-m">0</b><span>menit</span></div>
           <div class="cbox"><b id="c-s">0</b><span>detik</span></div>
         </div>
-        <p class="pesan-hand">dicicil belajarnya, jangan bolos </p>
+        <p class="pesan-hand">Dicicil belajarnya, jangan bolos!</p>
       </div>
       <form class="form-card paper reveal" id="formPesan" style="--r:-1.4deg">
         <span class="tape blue" style="top:-12px;right:30px;transform:rotate(5deg)" aria-hidden="true"></span>
@@ -581,14 +569,11 @@ footer a:hover{transform:translateY(-2px)}
 </section>
 </main>
 
-        
-                        
-
 <footer>
   <span class="f-tape">MADING DIGITAL 9A</span>
   <p class="hand">“Satu kelas, satu cerita.”</p>
-  <p>Dibuat dengan ❤, spidol warna, oleh <b>Tim Mading 9A</b> (Alif😭)</p>
-  <p>SMP Islam Bustanul Ulum· Tahun Ajaran 2026/2027</p>
+  <p>Dibuat dengan ❤, spidol warna, oleh <b>Tim Mading 9A</b> (Alif 😭)</p>
+  <p>SMP Islam Bustanul Ulum · Tahun Ajaran 2026/2027</p>
   <a href="#beranda">↑ balik ke atas papan</a>
 </footer>
 
@@ -602,38 +587,64 @@ var now = new Date();
 document.getElementById('hariIniTop').textContent =
   new Intl.DateTimeFormat('id-ID',{weekday:'long',day:'numeric',month:'long',year:'numeric'}).format(now);
 
-/* ---------- Data siswa ---------- */
+/* ---------- Data siswa (Diperbarui dengan dukungan foto) ---------- */
 var siswa = [
- {n:'Alif',r:'Tim Mading'},{n:'Nazril',r:'Ketua Kelas 1'},
- {n:'Adam'},{n:'Sahrul'},
- {n:'Muji'},{n:'Dika'},{n:'Rizky'},{n:'Putra'},
- {n:'safik'},{n:'Adyan'},
- {n:'Fajri'},{n:'ikhsan'}, 
- {n:'Fahri'},{n:'Arfan'},
- {n:'Ferdi'},{n:'Faiz'},
- {n:'Arfa'},{n:'Diyas'},
- {n:'Salma'},{n:'Safira',r:'Wakil kelas'},
- {n:'Nisa'},{n:'Ranti'},
- {n:'Sanum'},{n:'Imel'},
- {n:'Laila'},{n:'Nazua'},
- {n:'Solihah'},{n:'Nayla'},
- {n:'Zulfa'},{n:'Amel'},
-  {n:'Nazwa'},{n:'Tiara'},
-  {n:'Husna'},{n:'Syifa'}, 
- {n:'Azizah'},{n:'Zahra'}
+  {n:'Alif', r:'Tim Mading', img:'https://files.catbox.moe/4rfqer.jpg'},
+  {n:'Nazril', r:'Ketua Kelas', img:'https://files.catbox.moe/o6e2qm.jpg'},
+  {n:'Adam', r:'Seksi Kebersihan', img:'https://files.catbox.moe/031hso.jpg'},
+  {n:'Sahrul', img:'https://files.catbox.moe/l5imq8.jpg'},
+  {n:'Muji', r:'Seksi Keagamaan', img:''},
+  {n:'Dika', img:'https://files.catbox.moe/ia33fn.jpg'},
+  {n:'Rizky', img:'https://files.catbox.moe/qvmd9o.jpg'},
+  {n:'Putra', img:'https://files.catbox.moe/8jrpd6.jpg'},
+  {n:'Safik', r:'Bendahara', img:''},
+  {n:'Adyan', img:''},
+  {n:'Fajri', img:''},
+  {n:'Ikhsan', img:''},
+  {n:'Fahri', img:''},
+  {n:'Arfan', img:'https://files.catbox.moe/7hgoq6.jpg'},
+  {n:'Ferdi', img:'https://files.catbox.moe/v6lrm7.jpg'},
+  {n:'Faiz', img:'https://files.catbox.moe/s1ahvd.jpg'},
+  {n:'Arfa', img:''},
+  {n:'Diyas', img:''},
+  {n:'Salma', img:'https://files.catbox.moe/2kt1ev.jpg'},
+  {n:'Safira', r:'Wakil Ketua Kelas', img:'https://files.catbox.moe/nxnm3e.jpg'},
+  {n:'Nisa', r:'Bendahara', img:'https://files.catbox.moe/rjiufz.jpg'},
+  {n:'Ranti', img:''},
+  {n:'Sanum', img:'https://files.catbox.moe/3xgr7f.jpg'},
+  {n:'Imel', img:'https://files.catbox.moe/wr67s9.jpg'},
+  {n:'Laila', img:'https://files.catbox.moe/hmq1uf.jpg'},
+  {n:'Nazua', img:''},
+  {n:'Solihah', img:'https://files.catbox.moe/f3n3kd.jpg'},
+  {n:'Nayla', r:'Sekretaris', img:'https://files.catbox.moe/qt0xt0.jpg'},
+  {n:'Zulfa', img:''},
+  {n:'Amel', img:''},
+  {n:'Nazwa', img:''},
+  {n:'Tiara', img:'https://files.catbox.moe/3mzzlm.jpg'},
+  {n:'Husna', img:''},
+  {n:'Syifa', r:'Sekretaris', img:'https://files.catbox.moe/2nb81z.jpg'},
+  {n:'Azizah', img:''},
+  {n:'Zahra', r:'Seksi Kebersihan', img:'https://files.catbox.moe/s33aqe.jpg'}
 ];
+
 var palet = ['#d94f3f','#3f7fbf','#6f9f4e','#e08e3c','#8a5fb0','#3f9e9a','#c2578f','#5d6dc2'];
 var grid = document.getElementById('wargaGrid');
+
 siswa.forEach(function(s,i){
-  var initials = s.n.split(' ').slice(0,2).map(function(w){return w[0]}).join('').toUpperCase();
   var rot = ((i%5)-2)*0.9;
+  // Jika ada link foto spesifik, gunakan. Jika tidak, buat avatar inisial otomatis.
+  var avatarUrl = s.img && s.img !== 'LINK_FOTO_DISINI' 
+    ? s.img 
+    : 'https://ui-avatars.com/api/?name=' + encodeURIComponent(s.n) + '&background=' + palet[(i*5)%8].replace('#','') + '&color=fff&size=128&bold=true';
+  
   var el = document.createElement('article');
   el.className = 'kartu reveal';
   el.dataset.n = s.n.toLowerCase();
   el.style.setProperty('--r', rot+'deg');
   el.style.transitionDelay = (i%8)*45 + 'ms';
-  el.innerHTML = '<span class="ava" style="background:'+palet[(i*5)%8]+'">'+initials+'</span>'
-    + '<p class="nm">'+s.n+'</p>'
+  
+  el.innerHTML = '<img class="ava-img" src="' + avatarUrl + '" alt="Foto ' + s.n + '" onerror="this.src=\'https://ui-avatars.com/api/?name=' + encodeURIComponent(s.n) + '&background=random&color=fff&size=128\'">'
+    + '<p class="nm">' + s.n + '</p>'
     + (s.r ? '<span class="rtag">'+s.r+'</span>' : '<span class="rtag soft">Warga 9A</span>');
   grid.appendChild(el);
 });
@@ -655,43 +666,18 @@ input.addEventListener('input', function(){
 function P(t,m,g){return {t:t,m:m,g:g}}
 function B(t,m){return {t:t,m:m,brk:true}}
 var JADWAL = {
- 'Senin':[
-   B('07.00–07.45','Upacara Bendera','Pembina Upacara'),
-   P('','Akidah akhlak',' '),
-   P('','Pkn',''),
-   P('','Mtk','Bu'),
-   P('','B inggris')], 
-   
- 'Selasa':[
-   P('','Quran H',' '),
-   P('','b Arab',' '),
-   P('','B inggris',' '),
-   P('','Sbk',' '),
-   P('','Pai')],
- 'Rabu':[
-   P('','Ips',''),
-   P('','Tik',' '),
-   P('','Bk',' '),
-   P('','B inggris',' '),
-   P('','B indo')],
- 'Kamis':[
-   P('3jam','Mtk'),
-   P('','Fikih',''),
-   P('','Bahasa Indonesia',' ')],
- 'Jumat':[
-   P('','Ipa'),
-   P('','pjok',' '),
-   P('','Bahasa indo',' ')], 
-   'Sabtu':[
-   P('','Aswaja'),
-   P('','Ips',' '),
-   P('','Ipa',' ')]
+ 'Senin':[ B('07.00–07.45','Upacara Bendera','Pembina Upacara'), P('','Akidah Akhlak',''), P('','PKn',''), P('','Matematika','Bu Talithta'), P('','B. Inggris','')], 
+ 'Selasa':[ P('','Quran Hadis',''), P('','B. Arab',''), P('','B. Inggris',''), P('','SBK',''), P('','PAI','')],
+ 'Rabu':[ P('','IPS',''), P('','TIK',''), P('','BK',''), P('','B. Inggris',''), P('','B. Indonesia','')],
+ 'Kamis':[ P('','Matematika','Bu Talithta'), P('','Fikih',''), P('','B. Indonesia','')],
+ 'Jumat':[ P('','IPA',''), P('','PJOK',''), P('','B. Indonesia','')], 
+ 'Sabtu':[ P('','Aswaja',''), P('','IPS',''), P('','IPA','')]
 };
 var HARI = ['Senin','Selasa','Rabu','Kamis','Jumat','Sabtu'];
 var tabsBox = document.getElementById('hariTabs');
 var tbody = document.getElementById('isiJadwal');
 var hariNote = document.getElementById('hariNote');
-var idxHari = (now.getDay() >= 1 && now.getDay() <= 5) ? now.getDay()-1 : 0;
+var idxHari = (now.getDay() >= 1 && now.getDay() <= 6) ? now.getDay()-1 : 0;
 
 HARI.forEach(function(h,i){
   var b = document.createElement('button');
@@ -700,17 +686,19 @@ HARI.forEach(function(h,i){
   b.addEventListener('click', function(){ pilihHari(i); });
   tabsBox.appendChild(b);
 });
+
 function renderJadwal(i){
   var rows = JADWAL[HARI[i]], html = '';
   rows.forEach(function(r,j){
     if(r.brk){
       html += '<tr class="break"><td class="ke">'+(j+1)+'</td><td class="wkt">'+r.t+'</td><td colspan="2">'+r.m+'</td></tr>';
     } else {
-      html += '<tr><td class="ke">'+(j+1)+'</td><td class="wkt">'+r.t+'</td><td class="mp">'+r.m+'</td><td class="gr">'+r.g+'</td></tr>';
+      html += '<tr><td class="ke">'+(j+1)+'</td><td class="wkt">'+r.t+'</td><td class="mp">'+r.m+'</td><td class="gr">'+(r.g||'-')+'</td></tr>';
     }
   });
   tbody.innerHTML = html;
 }
+
 function pilihHari(i){
   idxHari = i;
   Array.prototype.forEach.call(tabsBox.children, function(b,j){
@@ -718,7 +706,7 @@ function pilihHari(i){
     b.setAttribute('aria-pressed', j===i ? 'true':'false');
   });
   renderJadwal(i);
-  hariNote.textContent = (now.getDay()===0||now.getDay()===6)
+  hariNote.textContent = (now.getDay()===0)
     ? 'Hari ini akhir pekan 🎉 santai dulu, ini jadwal hari ' + HARI[i] + '.'
     : 'Hari ini hari ' + namaHari[now.getDay()] + ' — cek jadwal & siapin bukumu! 📚';
 }
@@ -742,6 +730,7 @@ tick(); setInterval(tick, 1000);
 var papan = document.getElementById('papanNotes');
 var warnaNote = ['n-yellow','n-pink','n-blue','n-green'];
 var warnaPin  = ['', ' blue', ' yellow', ' green'];
+
 function buatNote(p, anim){
   var el = document.createElement('div');
   el.className = 'note ' + p.c + (anim ? ' pop' : '');
@@ -752,12 +741,13 @@ function buatNote(p, anim){
   el.appendChild(msg); el.appendChild(who);
   return el;
 }
+
 var KEY = 'mading9a-pesan', tersimpan = [];
 try{ tersimpan = JSON.parse(localStorage.getItem(KEY)) || []; }catch(e){ tersimpan = []; }
 if(!tersimpan.length){
   tersimpan = [
-    {n:'Bu Talithta', m:'Bangga sama kalian. Jangan kendor di tahun terakhir!', d:'wali kelas', c:'n-green', p:' blue'},
-    {n:'Safira', m:'Kompak terus sampai lulus ya, 9A forever! 🔥', d:'ketua kelas', c:'n-yellow', p:''}
+    {n:'Bu Talithta', m:'Bangga sama kalian. Jangan kendor di tahun terakhir!', d:'Wali Kelas', c:'n-green', p:' blue'},
+    {n:'Safira', m:'Kompak terus sampai lulus ya, 9A forever! 🔥', d:'Wakil Ketua Kelas', c:'n-yellow', p:''}
   ];
 }
 tersimpan.forEach(function(p){ papan.appendChild(buatNote(p,false)); });
@@ -793,4 +783,4 @@ if(reduce || !('IntersectionObserver' in window)){
 })();
 </script>
 </body>
-</html>
+  </html>
