@@ -3,42 +3,267 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Mading 9A ✦ Website Resmi Kelas 9A</title>
+<title>Selamat Datang - Mading 9A SMP Islam Bustanul Ulum</title>
 <style>
-* { margin:0; padding:0; box-sizing:border-box; }
+/* =========================================
+   1. GLOBAL & RESET
+   ========================================= */
+* { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Arial, sans-serif; }
 
 body {
-  font-family:'Segoe UI', Arial, sans-serif;
-  background:#020824; color:#fff;
-  height:100vh; overflow:hidden;
+  background: #020824;
+  color: #fff;
+  height: 100vh;
+  overflow: hidden;
 }
 
-/* ========== BACKGROUND FOTO (SUDAH DIPASANG LINK ANDA) ========== */
+/* =========================================
+   2. WELCOME OVERLAY (ANIMASI RAMAI)
+   ========================================= */
+.welcome {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #667eea, #764ba2, #f093fb, #4facfe);
+  background-size: 400% 400%;
+  animation: gradientMove 8s ease infinite;
+  overflow: hidden;
+  transition: opacity 1s ease, transform 1s ease;
+}
+
+.welcome.hide {
+  opacity: 0;
+  transform: scale(1.2);
+  pointer-events: none;
+}
+
+@keyframes gradientMove {
+  0%, 100% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+}
+
+/* Bintang / Partikel */
+.stars {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+}
+.star {
+  position: absolute;
+  color: #fff;
+  font-size: 20px;
+  animation: floatUp linear infinite;
+  opacity: 0.7;
+}
+@keyframes floatUp {
+  0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+  10% { opacity: 0.9; }
+  90% { opacity: 0.9; }
+  100% { transform: translateY(-100vh) rotate(720deg); opacity: 0; }
+}
+
+/* Gelembung */
+.bubble {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.15);
+  backdrop-filter: blur(5px);
+  animation: bubbleFloat 15s infinite ease-in-out;
+}
+@keyframes bubbleFloat {
+  0%, 100% { transform: translate(0,0) scale(1); }
+  50% { transform: translate(50px,-100px) scale(1.2); }
+}
+
+/* Konten Tengah Welcome (Dinamai .welcome-content agar TIDAK bentrok dengan .content milik slide) */
+.welcome-content {
+  position: relative;
+  z-index: 10;
+  text-align: center;
+  color: white;
+  padding: 20px;
+}
+
+.logo {
+  width: 130px;
+  height: 130px;
+  margin: 0 auto 25px;
+  background: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 70px;
+  box-shadow: 0 0 40px rgba(255,255,255,0.6), 0 0 80px rgba(255,255,255,0.3);
+  animation: logoPulse 2s ease-in-out infinite, logoEnter 1.2s ease-out;
+}
+@keyframes logoPulse {
+  0%, 100% { box-shadow: 0 0 40px rgba(255,255,255,0.6), 0 0 80px rgba(255,255,255,0.3); }
+  50% { box-shadow: 0 0 60px rgba(255,255,255,0.9), 0 0 120px rgba(255,255,255,0.5); }
+}
+@keyframes logoEnter {
+  0% { transform: scale(0) rotate(-360deg); opacity: 0; }
+  100% { transform: scale(1) rotate(0); opacity: 1; }
+}
+
+.welcome-text {
+  font-size: 22px;
+  letter-spacing: 8px;
+  opacity: 0;
+  animation: fadeDown 1s ease-out 0.5s forwards;
+  text-transform: uppercase;
+  font-weight: 300;
+}
+@keyframes fadeDown {
+  from { opacity: 0; transform: translateY(-30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.school-name {
+  font-size: 60px;
+  font-weight: 900;
+  margin: 15px 0;
+  text-shadow: 0 5px 20px rgba(0,0,0,0.3);
+  letter-spacing: 3px;
+}
+.school-name span {
+  display: inline-block;
+  opacity: 0;
+  animation: letterBounce 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+}
+@keyframes letterBounce {
+  0% { opacity: 0; transform: translateY(-100px) rotate(-20deg) scale(0); }
+  60% { transform: translateY(10px) rotate(5deg) scale(1.2); }
+  100% { opacity: 1; transform: translateY(0) rotate(0) scale(1); }
+}
+
+.tagline {
+  font-size: 18px;
+  font-style: italic;
+  margin-bottom: 30px;
+  opacity: 0;
+  animation: fadeIn 1s ease-out 2.5s forwards;
+  text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+.typing {
+  font-size: 16px;
+  margin-bottom: 35px;
+  min-height: 25px;
+  opacity: 0;
+  animation: fadeIn 0.5s ease-out 3s forwards;
+}
+.typing::after {
+  content: '|';
+  animation: blink 0.7s infinite;
+  color: #fff;
+}
+@keyframes blink {
+  50% { opacity: 0; }
+}
+
+.enter-btn {
+  padding: 16px 50px;
+  font-size: 18px;
+  font-weight: bold;
+  color: #764ba2;
+  background: white;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+  opacity: 0;
+  animation: btnAppear 0.8s ease-out 3.5s forwards, btnFloat 2s ease-in-out 4.3s infinite;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+.enter-btn::before {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 100%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(118,75,162,0.3), transparent);
+  transition: left 0.5s;
+}
+.enter-btn:hover::before { left: 100%; }
+.enter-btn:hover {
+  transform: translateY(-5px) scale(1.05);
+  box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+  background: #f093fb;
+  color: white;
+}
+@keyframes btnAppear {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes btnFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+/* Icon Terbang */
+.floating-icon {
+  position: absolute;
+  font-size: 40px;
+  animation: iconFloat 10s ease-in-out infinite;
+  opacity: 0.85;
+  filter: drop-shadow(0 5px 15px rgba(0,0,0,0.3));
+}
+@keyframes iconFloat {
+  0%, 100% { transform: translate(0,0) rotate(0deg); }
+  25% { transform: translate(30px,-40px) rotate(15deg); }
+  50% { transform: translate(-20px,-80px) rotate(-10deg); }
+  75% { transform: translate(-40px,-30px) rotate(20deg); }
+}
+
+/* Confetti */
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  animation: confettiFall linear forwards;
+}
+@keyframes confettiFall {
+  0% { transform: translateY(-100vh) rotate(0); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+/* =========================================
+   3. MADING 9A (BACKGROUND & SLIDE)
+   (100% SAMA PERSIS SEPERTI KODE ASLI ANDA)
+   ========================================= */
 #bg-image {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  /* Link foto Anda sudah dimasukkan di sini */
   background-image: url('https://files.catbox.moe/4hpr94.jpg'); 
-  background-size: cover; /* Memastikan foto memenuhi seluruh layar */
-  background-position: center; /* Fokus ke tengah foto */
+  background-size: cover;
+  background-position: center;
   background-repeat: no-repeat;
-  background-attachment: fixed; /* Agar foto tetap diam saat di-scroll (jika ada) */
+  background-attachment: fixed;
   z-index: 0;
 }
 
-/* Overlay gelap agar teks tetap terbaca jelas di atas foto */
 .bg {
   position: fixed;
   inset: 0;
   z-index: 1;
-  background: rgba(2, 8, 36, 0.75); /* Ubah 0.75 jadi 0.90 jika ingin lebih gelap, atau 0.60 jika ingin lebih terang */
+  background: rgba(2, 8, 36, 0.75);
   pointer-events: none;
 }
 
-/* Efek garis diagonal futuristik */
 .bg::after {
   content:""; 
   position:absolute; 
@@ -47,19 +272,18 @@ body {
   clip-path:polygon(35% 0,100% 0,100% 100%,0 100%);
 }
 
-/* Elemen heksagon background */
 .hexbg {
   position:absolute;
   clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%);
   background:rgba(0,120,255,.08); 
-  animation:float 9s ease-in-out infinite;
+  animation:floatHex 9s ease-in-out infinite;
 }
-@keyframes float {
+@keyframes floatHex {
   0%,100% { transform:translateY(0) rotate(0deg); }
   50%     { transform:translateY(-25px) rotate(8deg); }
 }
 
-/* ========== SLIDE ========== */
+/* Slide (Tata letak side-by-side / di pinggir dipertahankan) */
 .slide {
   position:fixed; inset:0; z-index:2;
   display:flex; align-items:center; justify-content:center;
@@ -69,7 +293,6 @@ body {
 }
 .slide.active { opacity:1; visibility:visible; transform:scale(1); }
 
-/* teks masuk dari kiri, berurutan */
 .content > * { opacity:0; transform:translateX(-50px); transition:all .8s ease; }
 .slide.active .content > *:nth-child(1){ transition-delay:.2s; }
 .slide.active .content > *:nth-child(2){ transition-delay:.35s; }
@@ -78,11 +301,10 @@ body {
 .slide.active .content > *:nth-child(5){ transition-delay:.8s; }
 .slide.active .content > * { opacity:1; transform:translateX(0); }
 
-/* elemen visual kanan (robot / foto heksagon) */
 .visual { opacity:0; transform:scale(.5) rotate(-8deg); transition:all .9s cubic-bezier(.2,.8,.2,1); }
 .slide.active .visual { opacity:1; transform:scale(1) rotate(0); transition-delay:.3s; }
 
-/* ========== KOMPONEN ========== */
+/* Komponen Mading */
 .pills { display:flex; gap:14px; margin-bottom:22px; }
 .pill {
   background:#4db5ff; color:#032060; font-weight:700;
@@ -98,7 +320,7 @@ h2 { font-size:clamp(28px,4.5vw,44px); letter-spacing:2px; }
 .pembimbing b { color:#7fd4ff; }
 
 .robot { font-size:clamp(90px,15vw,170px);
-  filter:drop-shadow(0 0 25px rgba(0,198,255,.6)); animation:float 6s ease-in-out infinite; }
+  filter:drop-shadow(0 0 25px rgba(0,198,255,.6)); animation:floatHex 6s ease-in-out infinite; }
 
 .hex-photo {
   width:clamp(220px,30vw,340px); height:clamp(250px,34vw,380px);
@@ -110,13 +332,11 @@ h2 { font-size:clamp(28px,4.5vw,44px); letter-spacing:2px; }
 
 .box { background:rgba(0,110,255,.35); border-left:4px solid #35e0ff;
   padding:14px 18px; border-radius:8px; margin-top:16px; max-width:560px; 
-  backdrop-filter: blur(4px); /* Efek blur agar kotak teks lebih mudah dibaca */
-}
+  backdrop-filter: blur(4px); }
 .box .tag { display:inline-block; background:#35e0ff; color:#032060;
   font-weight:700; padding:4px 14px; border-radius:6px; margin-bottom:8px; }
 .box p { font-size:14px; color:#dceaff; line-height:1.5; }
 
-/* ========== TOMBOL LANJUT (slide terakhir) ========== */
 .tombol {
   margin-top:26px;
   padding:14px 34px;
@@ -128,7 +348,7 @@ h2 { font-size:clamp(28px,4.5vw,44px); letter-spacing:2px; }
 }
 .tombol:hover { transform:translateY(-2px) scale(1.05); box-shadow:0 0 28px rgba(0,224,255,.8); }
 
-/* ========== LOGO INTRO ========== */
+/* Logo Intro Mading */
 .logo-wrap { position:relative; width:280px; height:310px; }
 .ring { position:absolute; clip-path:polygon(50% 0,100% 25%,100% 75%,50% 100%,0 75%,0 25%); }
 .ring.big { inset:-34px; background:linear-gradient(135deg,rgba(0,224,255,.35),rgba(0,98,255,.10));
@@ -149,11 +369,46 @@ h2 { font-size:clamp(28px,4.5vw,44px); letter-spacing:2px; }
 
 .hint { position:fixed; bottom:14px; left:50%; transform:translateX(-50%);
   z-index:5; font-size:12px; color:#7fa8ff; letter-spacing:1px; }
+
+/* Responsif HANYA untuk animasi welcome, TIDAK mengubah layout slide */
+@media (max-width: 600px) {
+  .school-name { font-size: 36px; }
+  .welcome-text { font-size: 16px; letter-spacing: 4px; }
+  .logo { width: 90px; height: 90px; font-size: 50px; }
+}
 </style>
 </head>
 <body>
 
-<!-- ✅ DIV KHUSUS UNTUK BACKGROUND FOTO -->
+<!-- =========================================
+     BAGIAN 1: WELCOME OVERLAY (ANIMASI RAMAI)
+     ========================================= -->
+<div class="welcome" id="welcome">
+  <div class="stars" id="stars"></div>
+
+  <!-- Icon terbang -->
+  <div class="floating-icon" style="top:15%; left:10%; animation-delay:0s;">📚</div>
+  <div class="floating-icon" style="top:20%; right:12%; animation-delay:1s;">🎓</div>
+  <div class="floating-icon" style="bottom:20%; left:15%; animation-delay:2s;">✏️</div>
+  <div class="floating-icon" style="bottom:25%; right:10%; animation-delay:0.5s;">🏫</div>
+  <div class="floating-icon" style="top:50%; left:5%; animation-delay:1.5s;">⭐</div>
+  <div class="floating-icon" style="top:45%; right:5%; animation-delay:2.5s;">🎨</div>
+  <div class="floating-icon" style="top:70%; left:50%; animation-delay:3s;">📐</div>
+  <div class="floating-icon" style="top:10%; left:50%; animation-delay:1.8s;">🔬</div>
+
+  <div class="welcome-content">
+    <div class="logo">🎓</div>
+    <div class="welcome-text">Selamat Datang</div>
+    <h1 class="school-name" id="schoolName"></h1>
+    <p class="tagline">"Cerdas, Berkarakter, dan Berprestasi"</p>
+    <div class="typing" id="typing"></div>
+    <button class="enter-btn" onclick="enterSite()">Masuk ke Website →</button>
+  </div>
+</div>
+
+<!-- =========================================
+     BAGIAN 2: MADING 9A (KONTEN UTAMA)
+     ========================================= -->
 <div id="bg-image"></div>
 
 <div class="bg">
@@ -210,47 +465,135 @@ h2 { font-size:clamp(28px,4.5vw,44px); letter-spacing:2px; }
 
 <div class="hint" id="hint">— intro diputar... klik untuk lewati —</div>
 
+<!-- =========================================
+     BAGIAN 3: JAVASCRIPT (GABUNGAN)
+     ========================================= -->
 <script>
-// ===== GANTI DENGAN NAMA FILE TUJUANMU =====
-const FILE_SELANJUTNYA = "Deffxy.html";
-// ===========================================
+  // ==========================================
+  // A. LOGIKA WELCOME ANIMATION
+  // ==========================================
+  
+  // 1. Animasi nama sekolah per huruf
+  const name = "SMP ISLAM BUSTANUL ULUM";
+  const nameEl = document.getElementById('schoolName');
+  name.split('').forEach((char, i) => {
+    const span = document.createElement('span');
+    span.textContent = char === ' ' ? '\u00A0' : char;
+    span.style.animationDelay = (0.8 + i * 0.08) + 's';
+    nameEl.appendChild(span);
+  });
 
-const slides = document.querySelectorAll('.slide');
-const hint = document.getElementById('hint');
-let i = 0, mulai = false;
+  // 2. Bintang / partikel naik
+  const starsContainer = document.getElementById('stars');
+  const symbols = ['✨', '⭐', '💫', '🌟', '✦', '•'];
+  for (let i = 0; i < 40; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    s.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+    s.style.left = Math.random() * 100 + '%';
+    s.style.fontSize = (Math.random() * 20 + 12) + 'px';
+    s.style.animationDuration = (Math.random() * 10 + 8) + 's';
+    s.style.animationDelay = Math.random() * 10 + 's';
+    starsContainer.appendChild(s);
+  }
 
-function go(n) {
-  if (n === i || n < 0 || n >= slides.length) return;
-  slides[i].classList.remove('active');
-  i = n;
-  slides[i].classList.add('active');
-}
+  // 3. Gelembung
+  for (let i = 0; i < 8; i++) {
+    const b = document.createElement('div');
+    b.className = 'bubble';
+    const size = Math.random() * 150 + 50;
+    b.style.width = size + 'px';
+    b.style.height = size + 'px';
+    b.style.left = Math.random() * 100 + '%';
+    b.style.top = Math.random() * 100 + '%';
+    b.style.animationDelay = Math.random() * 5 + 's';
+    document.getElementById('welcome').appendChild(b);
+  }
 
-function masukUtama() {
-  if (mulai) return;
-  mulai = true;
-  go(1); // langsung ke halaman utama
-  hint.textContent = 'klik / panah kanan: lanjut •';
-}
+  // 4. Typing effect
+  const typingText = "Mencetak generasi unggul, kreatif, dan berakhlak mulia...";
+  const typingEl = document.getElementById('typing');
+  let idx = 0;
+  setTimeout(() => {
+    const typer = setInterval(() => {
+      typingEl.textContent = typingText.substring(0, idx);
+      idx++;
+      if (idx > typingText.length) clearInterval(typer);
+    }, 60);
+  }, 3000);
 
-// intro main SEKALI di awal (~3 detik), lalu otomatis masuk halaman utama
-setTimeout(masukUtama, 3000);
+  // 5. Confetti saat tombol muncul
+  function launchConfetti() {
+    const colors = ['#ff6b6b', '#feca57', '#48dbfb', '#1dd1a1', '#f368e0', '#ffffff'];
+    for (let i = 0; i < 80; i++) {
+      const c = document.createElement('div');
+      c.className = 'confetti';
+      c.style.left = Math.random() * 100 + '%';
+      c.style.background = colors[Math.floor(Math.random() * colors.length)];
+      c.style.animationDuration = (Math.random() * 3 + 2) + 's';
+      c.style.animationDelay = Math.random() * 0.5 + 's';
+      c.style.borderRadius = Math.random() > 0.5 ? '50%' : '0';
+      document.getElementById('welcome').appendChild(c);
+    }
+  }
+  setTimeout(launchConfetti, 3500);
 
-function next() { if (mulai && i < slides.length - 1) go(i + 1); }
-function prev() { if (mulai && i > 1) go(i - 1); }
+  // 6. Fungsi Masuk ke Web
+  function enterSite() {
+    document.getElementById('welcome').classList.add('hide');
+    setTimeout(() => {
+      document.getElementById('welcome').style.display = 'none';
+      // Pastikan slide mading langsung aktif jika user klik manual
+      if (!mulai) masukUtama();
+    }, 1000);
+  }
 
-// tombol di slide terakhir: pindah file
-document.getElementById('tombolLanjut').addEventListener('click', e => {
-  e.stopPropagation(); 
-  window.location.href = FILE_SELANJUTNYA;
-});
+  // ==========================================
+  // B. LOGIKA SLIDE MADING 9A
+  // ==========================================
+  const FILE_SELANJUTNYA = "Deffxy.html";
+  const slides = document.querySelectorAll('.slide');
+  const hint = document.getElementById('hint');
+  let i = 0, mulai = false;
 
-document.addEventListener('click', () => { mulai ? next() : masukUtama(); });
-document.addEventListener('keydown', e => {
-  if (!mulai && (e.key === ' ' || e.key === 'Enter')) { masukUtama(); return; }
-  if (e.key === 'ArrowRight' || e.key === ' ') next();
-  if (e.key === 'ArrowLeft') prev();
-});
+  function go(n) {
+    if (n === i || n < 0 || n >= slides.length) return;
+    slides[i].classList.remove('active');
+    i = n;
+    slides[i].classList.add('active');
+  }
+
+  function masukUtama() {
+    if (mulai) return;
+    mulai = true;
+    go(1); // langsung ke halaman utama
+    hint.textContent = 'klik / panah kanan: lanjut •';
+  }
+
+  // Intro main SEKALI di awal (~3.5 detik agar sinkron dengan animasi welcome), lalu otomatis masuk halaman utama
+  setTimeout(masukUtama, 3500);
+
+  function next() { if (mulai && i < slides.length - 1) go(i + 1); }
+  function prev() { if (mulai && i > 1) go(i - 1); }
+
+  // Tombol di slide terakhir: pindah file
+  document.getElementById('tombolLanjut').addEventListener('click', e => {
+    e.stopPropagation(); 
+    window.location.href = FILE_SELANJUTNYA;
+  });
+
+  document.addEventListener('click', (e) => { 
+    // Jangan trigger next jika yang diklik adalah tombol enter atau tombol lanjut
+    if (e.target.classList.contains('enter-btn') || e.target.classList.contains('tombol')) return;
+    mulai ? next() : masukUtama(); 
+  });
+  
+  document.addEventListener('keydown', e => {
+    if (!mulai && (e.key === ' ' || e.key === 'Enter')) { masukUtama(); return; }
+    if (e.key === 'ArrowRight' || e.key === ' ') next();
+    if (e.key === 'ArrowLeft') prev();
+  });
 </script>
+
 </body>
-  </html>
+</html>
